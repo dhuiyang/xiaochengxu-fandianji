@@ -21,8 +21,8 @@
     <view
       wx:for="{{ visibleDishes }}"
       class="dish-row {{ item.selected ? 'selected' : '' }}"
-      wx:key="id"
-      data-id="{{ item.id }}"
+      wx:key="_id"
+      data-id="{{ item._id }}"
       bindtap="toggleDish"
     >
       <view class="dish-emoji">{{ item.emoji }}</view>
@@ -46,5 +46,4 @@
     </button>
   </view>
 </view>
-
 

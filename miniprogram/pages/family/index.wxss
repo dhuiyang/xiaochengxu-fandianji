@@ -92,19 +92,6 @@
   border-radius: 8rpx;
   font-size: 20rpx;
 }
-.settings {
-  margin-top: 22rpx;
-}
-.setting {
-  display: flex;
-  justify-content: space-between;
-  padding: 24rpx 0;
-  border-bottom: 1rpx solid #f4ece7;
-  font-size: 28rpx;
-}
-.setting:last-child {
-  border: 0;
-}
 .reset {
   display: block;
   margin: 40rpx auto 0;

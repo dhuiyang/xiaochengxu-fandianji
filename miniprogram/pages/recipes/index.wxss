@@ -48,12 +48,16 @@
   background: #e87837;
 }
 .grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20rpx;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 .dish-card {
+  width: calc(50% - 10rpx);
+  min-width: 0;
+  margin-bottom: 20rpx;
   padding: 18rpx;
+  box-sizing: border-box;
   background: #fff;
   border-radius: 24rpx;
 }
@@ -72,12 +76,12 @@
   font-weight: 700;
 }
 .dish-desc {
-  height: 34rpx;
-  overflow: hidden;
+  min-height: 34rpx;
   color: #9d8d83;
   font-size: 22rpx;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  line-height: 34rpx;
+  overflow-wrap: anywhere;
+  word-break: break-all;
 }
 .dish-card .pill {
   margin-top: 14rpx;

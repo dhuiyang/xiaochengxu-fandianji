@@ -44,7 +44,7 @@ Page({
   toggleDish(e) {
     const id = e.currentTarget.dataset.id;
     const dishes = this.data.dishes.map((item) =>
-      item.id === id ? Object.assign({}, item, { selected: !item.selected }) : item
+      item._id === id ? Object.assign({}, item, { selected: !item.selected }) : item
     );
     this.setData({ dishes });
     this.applyFilter();

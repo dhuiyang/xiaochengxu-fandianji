@@ -12,7 +12,12 @@
     </view>
     <view class="field">
       <view>菜品简介</view>
-      <textarea placeholder="简单描述一下这道菜" maxlength="40" bindinput="inputDescription" />
+      <textarea
+        placeholder="简单描述一下这道菜"
+        maxlength="40"
+        value="{{ description }}"
+        bindinput="inputDescription"
+      />
     </view>
     <view class="field">
       <view>选择封面</view>
@@ -29,7 +34,8 @@
       </view>
     </view>
   </view>
-  <button class="primary-btn" bindtap="save">保存到家庭菜谱</button>
+  <button class="primary-btn" bindtap="save">
+    {{ isEditing ? '保存修改' : '保存到家庭菜谱' }}
+  </button>
 </view>
-
 

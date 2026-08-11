@@ -36,4 +36,7 @@ Page({
   goAdd() {
     wx.navigateTo({ url: '/pages/dish-form/index' });
   },
+  goEdit(e) {
+    wx.navigateTo({ url: `/pages/dish-form/index?id=${e.currentTarget.dataset.id}` });
+  },
 });

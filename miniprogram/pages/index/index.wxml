@@ -1,10 +1,10 @@
 <view class="page">
   <view class="greeting">
     <view>
-      <view class="eyebrow">8 月 11 日 · 周二</view>
+      <view class="eyebrow">{{ dateLabel }}</view>
       <view class="headline">今天吃点什么？</view>
     </view>
-    <view class="avatar">妈</view>
+    <view class="avatar">{{ userAvatar }}</view>
   </view>
   <view class="meal-switch">
     <view class="switch-item {{ activeMeal === 'lunch' ? 'active' : '' }}">午餐</view>

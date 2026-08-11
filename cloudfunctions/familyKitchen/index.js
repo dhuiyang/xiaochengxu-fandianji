@@ -109,6 +109,13 @@ async function listDishes() {
       .get()
   ).data;
 }
+async function getDish({ id }) {
+  const ctx = requireFamily(await userContext());
+  if (!id) throw new Error('菜谱不存在');
+  const dish = await db.collection('dishes').doc(id).get();
+  if (!dish.data || dish.data.familyId !== ctx.family._id) throw new Error('菜谱不存在');
+  return dish.data;
+}
 async function saveDish({ name, category, description, emoji }) {
   const ctx = requireFamily(await userContext());
   if (!name || !String(name).trim()) throw new Error('请填写菜名');
@@ -120,6 +127,23 @@ async function saveDish({ name, category, description, emoji }) {
       description: (description || '').slice(0, 40),
       emoji: emoji || '🍲',
       createdAt: db.serverDate(),
+    },
+  });
+  return { success: true };
+}
+async function updateDish({ id, name, category, description, emoji }) {
+  const ctx = requireFamily(await userContext());
+  if (!id) throw new Error('菜谱不存在');
+  if (!name || !String(name).trim()) throw new Error('请填写菜名');
+  const dish = await db.collection('dishes').doc(id).get();
+  if (!dish.data || dish.data.familyId !== ctx.family._id) throw new Error('菜谱不存在');
+  await db.collection('dishes').doc(id).update({
+    data: {
+      name: String(name).trim().slice(0, 30),
+      category: category || '荤菜',
+      description: (description || '').slice(0, 40),
+      emoji: emoji || '🍲',
+      updatedAt: db.serverDate(),
     },
   });
   return { success: true };
@@ -226,7 +250,9 @@ exports.main = async (event) => {
       createFamily,
       joinFamily,
       listDishes,
+      getDish,
       saveDish,
+      updateDish,
       overview,
       submitMealRequest,
       confirmMeal,

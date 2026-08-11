@@ -19,7 +19,13 @@
     </view>
   </view>
   <view class="grid">
-    <view wx:for="{{ visibleDishes }}" class="dish-card" wx:key="id">
+    <view
+      wx:for="{{ visibleDishes }}"
+      class="dish-card"
+      wx:key="_id"
+      data-id="{{ item._id }}"
+      bindtap="goEdit"
+    >
       <view class="food">{{ item.emoji }}</view>
       <view class="dish-name">{{ item.name }}</view>
       <view class="dish-desc">{{ item.description }}</view>
@@ -28,5 +34,4 @@
   </view>
   <view wx:if="{{ !visibleDishes.length }}" class="empty">没有找到相关菜品</view>
 </view>
-
 

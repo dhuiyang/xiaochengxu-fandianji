@@ -10,6 +10,8 @@ Page({
     requests: [],
     activeMeal: 'lunch',
     mealCountdown: '',
+    dateLabel: '',
+    userAvatar: '我',
   },
   async onShow() {
     this.updateMealTiming();
@@ -26,6 +28,7 @@ Page({
       const record = state.record;
       this.setData({
         isChef: ['owner', 'chef'].includes(state.member.role),
+        userAvatar: this.getAvatarText(state.member.name),
         myOrderText: mine ? mine.dishes.join('、') : '还没点菜',
         myNote: mine ? mine.note : '',
         requests: state.requests
@@ -75,7 +78,16 @@ Page({
     this.setData({
       activeMeal,
       mealCountdown: `距离${tomorrow ? '明日' : ''}${mealName}还有${duration}`,
+      dateLabel: this.getDateLabel(now),
     });
+  },
+  getDateLabel(date) {
+    const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+    return `${date.getMonth() + 1} 月 ${date.getDate()} 日 · ${weekdays[date.getDay()]}`;
+  },
+  getAvatarText(nickname) {
+    const name = String(nickname || '').trim();
+    return Array.from(name)[0] || '我';
   },
   startMealTimer() {
     this.stopMealTimer();
