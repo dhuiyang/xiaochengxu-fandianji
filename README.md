@@ -14,7 +14,7 @@
 
 1. 使用微信开发者工具导入本目录。
 2. AppID 可先使用测试号或项目现有 AppID。
-3. 在微信开发者工具中右键 `cloudfunctions/familyKitchenV2`，选择“上传并部署：云端安装依赖”。
+3. 在微信开发者工具中右键 `cloudfunctions/familyKitchen`，选择“上传并部署：云端安装依赖”。
 4. 点击编译；首次进入创建或加入一个真实家庭，再开始添加菜品与点菜。
 
 ## 代码格式化与检查
@@ -32,4 +32,4 @@ WXML 使用与插件兼容的 Prettier 2.8.8，以保证小程序模板可以正
 
 ## 云开发接入预留
 
-`cloudfunctions/familyKitchenV2` 是数据边界。云函数按当前微信用户解析家庭归属，不信任客户端传入的 `familyId`；只有 `owner` / `chef` 可以确认菜单。首次调用会创建 `users`、`families`、`familyMembers`、`dishes`、`mealRequests`、`mealRecords` 六个空集合。
+`cloudfunctions/familyKitchen` 是数据边界。云函数按当前微信用户解析家庭归属，不信任客户端传入的 `familyId`；只有 `owner` / `chef` 可以确认菜单。首次调用会创建 `users`、`families`、`familyMembers`、`dishes`、`mealRequests`、`mealRecords` 六个空集合。

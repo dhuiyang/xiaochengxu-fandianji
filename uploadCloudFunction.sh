@@ -1,1 +1,1 @@
-${installPath} cloud functions deploy --e ${envId} --n familyKitchenV2 --r --project ${projectPath}
+${installPath} cloud functions deploy --e ${envId} --n familyKitchen --r --project ${projectPath}
