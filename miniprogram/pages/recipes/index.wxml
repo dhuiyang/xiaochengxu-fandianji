@@ -1,0 +1,32 @@
+<view class="page">
+  <view class="title-row">
+    <view>
+      <view class="heading">家庭菜谱</view>
+      <view class="muted">{{ dishes.length }} 道家常菜</view>
+    </view>
+    <view class="add" bindtap="goAdd">＋</view>
+  </view>
+  <input class="search" placeholder="搜索菜名" bindinput="search" />
+  <view class="chips">
+    <view
+      wx:for="{{ categories }}"
+      class="chip {{ activeCategory === item ? 'active' : '' }}"
+      wx:key="*this"
+      data-category="{{ item }}"
+      bindtap="filter"
+    >
+      {{ item }}
+    </view>
+  </view>
+  <view class="grid">
+    <view wx:for="{{ visibleDishes }}" class="dish-card" wx:key="id">
+      <view class="food">{{ item.emoji }}</view>
+      <view class="dish-name">{{ item.name }}</view>
+      <view class="dish-desc">{{ item.description }}</view>
+      <view class="pill">{{ item.category }}</view>
+    </view>
+  </view>
+  <view wx:if="{{ !visibleDishes.length }}" class="empty">没有找到相关菜品</view>
+</view>
+
+

@@ -1,0 +1,60 @@
+.heading {
+  margin-top: 12rpx;
+  font-size: 44rpx;
+  font-weight: 700;
+}
+.intro {
+  margin: 10rpx 0 30rpx;
+  font-size: 26rpx;
+}
+.record {
+  margin-bottom: 20rpx;
+}
+.record-date {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 22rpx;
+  border-bottom: 1rpx solid #f4ece7;
+}
+.date-main {
+  margin-bottom: 8rpx;
+  font-size: 31rpx;
+  font-weight: 700;
+}
+.record-icon {
+  font-size: 44rpx;
+}
+.menu-label {
+  margin: 22rpx 0 14rpx;
+  color: #a07963;
+  font-size: 24rpx;
+}
+.menu-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+.menu-item {
+  padding: 10rpx 16rpx;
+  color: #c6642b;
+  background: #fff0e6;
+  border-radius: 12rpx;
+  font-size: 27rpx;
+}
+.empty-box {
+  margin-top: 140rpx;
+  color: #8d7c72;
+  text-align: center;
+  font-size: 30rpx;
+}
+.empty-box view:first-child {
+  margin-bottom: 20rpx;
+  font-size: 90rpx;
+}
+.empty-box text {
+  display: block;
+  margin-top: 14rpx;
+  color: #aa9a90;
+  font-size: 24rpx;
+}

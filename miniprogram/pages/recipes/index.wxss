@@ -1,0 +1,89 @@
+.title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 12rpx 0 24rpx;
+}
+.heading {
+  font-size: 44rpx;
+  font-weight: 700;
+  margin-bottom: 8rpx;
+}
+.add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  color: #fff;
+  background: #e87837;
+  font-size: 48rpx;
+  font-weight: 300;
+}
+.search {
+  height: 78rpx;
+  padding: 0 26rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  box-sizing: border-box;
+  font-size: 27rpx;
+}
+.chips {
+  display: flex;
+  overflow-x: auto;
+  padding: 22rpx 0;
+  white-space: nowrap;
+}
+.chip {
+  margin-right: 14rpx;
+  padding: 12rpx 22rpx;
+  color: #907a6d;
+  background: #fff0e5;
+  border-radius: 32rpx;
+  font-size: 24rpx;
+}
+.chip.active {
+  color: #fff;
+  background: #e87837;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+}
+.dish-card {
+  padding: 18rpx;
+  background: #fff;
+  border-radius: 24rpx;
+}
+.food {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 172rpx;
+  border-radius: 18rpx;
+  background: #faeee4;
+  font-size: 80rpx;
+}
+.dish-name {
+  margin: 18rpx 0 8rpx;
+  font-size: 29rpx;
+  font-weight: 700;
+}
+.dish-desc {
+  height: 34rpx;
+  overflow: hidden;
+  color: #9d8d83;
+  font-size: 22rpx;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.dish-card .pill {
+  margin-top: 14rpx;
+}
+.empty {
+  padding: 100rpx 0;
+  color: #9c8e83;
+  text-align: center;
+}

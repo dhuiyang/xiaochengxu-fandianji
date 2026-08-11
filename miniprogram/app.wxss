@@ -1,0 +1,60 @@
+page {
+  background: #fff9f2;
+  color: #342923;
+  font-family: 'PingFang SC', 'Helvetica Neue', sans-serif;
+}
+button {
+  background: initial;
+  padding: 0;
+  line-height: inherit;
+}
+button::after {
+  border: none;
+}
+.page {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 28rpx 28rpx 48rpx;
+}
+.card {
+  background: #fff;
+  border-radius: 28rpx;
+  padding: 28rpx;
+  box-shadow: 0 10rpx 36rpx rgba(119, 82, 54, 0.07);
+}
+.primary-btn {
+  background: #e87837;
+  color: #fff;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  text-align: center;
+}
+.secondary-btn {
+  background: #fff2e8;
+  color: #d96829;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  text-align: center;
+}
+.muted {
+  color: #9c8e83;
+}
+.section-title {
+  margin: 38rpx 0 20rpx;
+  font-size: 34rpx;
+  font-weight: 700;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8rpx 16rpx;
+  color: #c86b33;
+  background: #fff0e5;
+  border-radius: 99rpx;
+  font-size: 22rpx;
+}

@@ -1,0 +1,44 @@
+<view class="page">
+  <view class="brand">
+    <view class="brand-icon">🍲</view>
+    <view class="brand-title">家庭菜谱</view>
+    <view class="brand-sub">和家人一起，好好吃饭</view>
+  </view>
+  <view class="card">
+    <view class="tabs">
+      <view
+        class="tab {{ mode === 'create' ? 'active' : '' }}"
+        data-mode="create"
+        bindtap="switchMode"
+      >
+        创建家庭
+      </view>
+      <view class="tab {{ mode === 'join' ? 'active' : '' }}" data-mode="join" bindtap="switchMode">
+        加入家庭
+      </view>
+    </view>
+    <view class="field">
+      <view>你的称呼</view>
+      <input placeholder="例如：妈妈" value="{{ memberName }}" bindinput="inputName" />
+    </view>
+    <view wx:if="{{ mode === 'create' }}" class="field">
+      <view>家庭名称</view>
+      <input placeholder="例如：杨氏厨房" value="{{ familyName }}" bindinput="inputFamily" />
+    </view>
+    <view wx:else="" class="field">
+      <view>家庭邀请码</view>
+      <input
+        placeholder="请输入 6 位邀请码"
+        maxlength="6"
+        value="{{ inviteCode }}"
+        bindinput="inputCode"
+      />
+    </view>
+    <button class="primary-btn" bindtap="submit">
+      {{ mode === 'create' ? '创建我的家庭' : '加入这个家庭' }}
+    </button>
+  </view>
+  <view class="footnote">创建者将自动成为家庭主理人，可确认每日菜单</view>
+</view>
+
+

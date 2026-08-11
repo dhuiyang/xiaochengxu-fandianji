@@ -1,0 +1,53 @@
+{
+  "pages": [
+    "pages/onboarding/index",
+    "pages/index/index",
+    "pages/meal/index",
+    "pages/recipes/index",
+    "pages/dish-form/index",
+    "pages/records/index",
+    "pages/family/index"
+  ],
+  "window": {
+    "backgroundColor": "#FFF9F2",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#FFF9F2",
+    "navigationBarTitleText": "家庭厨房",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#9C8E83",
+    "selectedColor": "#E87837",
+    "backgroundColor": "#FFFDF9",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/icons/home.png",
+        "selectedIconPath": "images/icons/home-active.png"
+      },
+      {
+        "pagePath": "pages/recipes/index",
+        "text": "菜谱",
+        "iconPath": "images/icons/goods.png",
+        "selectedIconPath": "images/icons/goods-active.png"
+      },
+      {
+        "pagePath": "pages/records/index",
+        "text": "记录",
+        "iconPath": "images/icons/business.png",
+        "selectedIconPath": "images/icons/business-active.png"
+      },
+      {
+        "pagePath": "pages/family/index",
+        "text": "家庭",
+        "iconPath": "images/icons/usercenter.png",
+        "selectedIconPath": "images/icons/usercenter-active.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}

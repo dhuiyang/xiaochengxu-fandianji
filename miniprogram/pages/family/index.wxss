@@ -1,0 +1,113 @@
+.family-head {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin: 20rpx 0 30rpx;
+}
+.house {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100rpx;
+  height: 100rpx;
+  background: #ffe4cb;
+  border-radius: 32rpx;
+  font-size: 50rpx;
+}
+.heading {
+  font-size: 40rpx;
+  font-weight: 700;
+  margin-bottom: 10rpx;
+}
+.invite {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #fff 0%, #fff3e7 100%);
+}
+.small-title {
+  color: #a47b62;
+  font-size: 24rpx;
+}
+.invite-code {
+  margin: 8rpx 0;
+  color: #df7132;
+  font-size: 42rpx;
+  font-weight: 700;
+  letter-spacing: 5rpx;
+}
+.copy-btn {
+  padding: 14rpx 24rpx;
+  color: #d4672b;
+  background: #fff;
+  border: 1rpx solid #f0c6aa;
+  border-radius: 32rpx;
+  font-size: 26rpx;
+}
+.members {
+  padding-top: 6rpx;
+  padding-bottom: 6rpx;
+}
+.member {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f4ece7;
+}
+.member:last-child {
+  border: 0;
+}
+.member-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 66rpx;
+  height: 66rpx;
+  border-radius: 50%;
+  color: #985229;
+  background: #ffdfc7;
+  font-weight: 700;
+}
+.member-avatar.green {
+  color: #517649;
+  background: #dfeeda;
+}
+.member-avatar.blue {
+  color: #4b708d;
+  background: #deecf7;
+}
+.member-copy {
+  margin-left: 18rpx;
+  font-size: 28rpx;
+}
+.member-copy .muted {
+  margin-top: 8rpx;
+  font-size: 23rpx;
+}
+.role {
+  margin-left: 10rpx;
+  padding: 4rpx 10rpx;
+  color: #c1632f;
+  background: #fff0e4;
+  border-radius: 8rpx;
+  font-size: 20rpx;
+}
+.settings {
+  margin-top: 22rpx;
+}
+.setting {
+  display: flex;
+  justify-content: space-between;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f4ece7;
+  font-size: 28rpx;
+}
+.setting:last-child {
+  border: 0;
+}
+.reset {
+  display: block;
+  margin: 40rpx auto 0;
+  color: #ad9990;
+  font-size: 25rpx;
+}

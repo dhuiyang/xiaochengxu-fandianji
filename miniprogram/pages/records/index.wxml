@@ -1,0 +1,26 @@
+<view class="page">
+  <view class="heading">饮食记录</view>
+  <view class="muted intro">记录每一顿认真吃过的饭</view>
+  <view wx:if="{{ records.length }}" class="record-list">
+    <view wx:for="{{ records }}" class="record card" wx:key="time">
+      <view class="record-date">
+        <view>
+          <view class="date-main">{{ item.date }}</view>
+          <view class="muted">{{ item.meal }} · {{ item.time }} 由{{ item.confirmer }}确认</view>
+        </view>
+        <view class="record-icon">🍽</view>
+      </view>
+      <view class="menu-label">今日菜单</view>
+      <view class="menu-items">
+        <text wx:for="{{ item.dishes }}" class="menu-item" wx:key="*this">{{ item }}</text>
+      </view>
+    </view>
+  </view>
+  <view wx:else="" class="empty-box">
+    <view>🥣</view>
+    <view>还没有饮食记录</view>
+    <text>确认一餐菜单后，会自动沉淀在这里</text>
+  </view>
+</view>
+
+

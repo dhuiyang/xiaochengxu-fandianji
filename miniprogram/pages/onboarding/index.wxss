@@ -1,0 +1,56 @@
+.brand {
+  padding: 110rpx 0 64rpx;
+  text-align: center;
+}
+.brand-icon {
+  font-size: 100rpx;
+}
+.brand-title {
+  margin-top: 20rpx;
+  font-size: 48rpx;
+  font-weight: 700;
+}
+.brand-sub,
+.footnote {
+  margin-top: 14rpx;
+  color: #9e8c81;
+  font-size: 26rpx;
+}
+.tabs {
+  display: flex;
+  margin-bottom: 20rpx;
+  border-bottom: 1rpx solid #f2e8e1;
+}
+.tab {
+  flex: 1;
+  padding: 18rpx 0;
+  color: #9c8a80;
+  text-align: center;
+  font-size: 28rpx;
+}
+.tab.active {
+  color: #d9692c;
+  font-weight: 600;
+  border-bottom: 4rpx solid #e87837;
+}
+.field {
+  padding: 20rpx 0;
+  font-size: 27rpx;
+  font-weight: 600;
+}
+.field input {
+  margin-top: 16rpx;
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid #eee3dc;
+  color: #45372f;
+  font-size: 28rpx;
+  font-weight: 400;
+}
+.card .primary-btn {
+  margin-top: 28rpx;
+}
+.footnote {
+  padding: 22rpx;
+  text-align: center;
+  line-height: 1.6;
+}

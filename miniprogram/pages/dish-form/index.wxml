@@ -1,0 +1,35 @@
+<view class="page">
+  <view class="form card">
+    <view class="field">
+      <view>菜名</view>
+      <input placeholder="例如：红烧肉" value="{{ name }}" bindinput="inputName" />
+    </view>
+    <view class="field">
+      <view>分类</view>
+      <picker range="{{ categories }}" bindchange="pickCategory">
+        <view class="picker">{{ category }}<text>›</text></view>
+      </picker>
+    </view>
+    <view class="field">
+      <view>菜品简介</view>
+      <textarea placeholder="简单描述一下这道菜" maxlength="40" bindinput="inputDescription" />
+    </view>
+    <view class="field">
+      <view>选择封面</view>
+      <view class="emoji-list">
+        <view
+          wx:for="{{ emojis }}"
+          class="emoji {{ emoji === item ? 'selected' : '' }}"
+          wx:key="*this"
+          data-emoji="{{ item }}"
+          bindtap="chooseEmoji"
+        >
+          {{ item }}
+        </view>
+      </view>
+    </view>
+  </view>
+  <button class="primary-btn" bindtap="save">保存到家庭菜谱</button>
+</view>
+
+

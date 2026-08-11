@@ -1,0 +1,13 @@
+<!-- miniprogram/components/cloudTipModal/index.wxml --><!-- wx:if="{{showUploadTip}}" --><view
+  wx:if="{{ showTip }}"
+  class="install_tip"
+>
+  <view class="install_tip_back" />
+  <view class="install_tip_detail">
+    <image class="install_tip_close" src="../../images/icons/close.png" bind:tap="onClose" />
+    <view class="install_tip_detail_title">{{ title }}</view>
+    <view class="install_tip_detail_tip">{{ content }}</view>
+  </view>
+</view>
+
+

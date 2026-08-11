@@ -1,0 +1,22 @@
+{
+  "name": "fandianji",
+  "version": "1.0.0",
+  "description": "基于微信原生小程序模板实现的家庭共餐 P0。数据仅通过云函数读写云开发环境 `cloud1-d5geu37vd9a1c956f`，不包含任何演示数据或本地缓存数据层。",
+  "main": "index.js",
+  "scripts": {
+    "format": "prettier --write \"{miniprogram,cloudfunctions}/**/*.{js,json,wxml,wxss}\" \"*.{js,json,md}\"",
+    "format:check": "prettier --check \"{miniprogram,cloudfunctions}/**/*.{js,json,wxml,wxss}\" \"*.{js,json,md}\"",
+    "lint": "eslint miniprogram cloudfunctions",
+    "check": "npm run format:check && npm run lint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@babel/parser": "^8.0.4",
+    "eslint": "^10.8.1",
+    "prettier": "^2.8.8",
+    "prettier-plugin-wxml": "^3.0.0"
+  }
+}

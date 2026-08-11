@@ -1,0 +1,36 @@
+<view class="page">
+  <view class="family-head">
+    <view class="house">🏠</view>
+    <view>
+      <view class="heading">{{ family.name }}</view>
+      <view class="muted">和家人一起，好好吃饭</view>
+    </view>
+  </view>
+  <view class="invite card">
+    <view>
+      <view class="small-title">家庭邀请码</view>
+      <view class="invite-code">{{ family.inviteCode }}</view>
+      <view class="muted">分享邀请码，邀请家人加入</view>
+    </view>
+    <button class="copy-btn" bindtap="copyCode">复制</button>
+  </view>
+  <view class="section-title">家庭成员</view>
+  <view class="members card">
+    <view wx:for="{{ members }}" class="member" wx:key="_id">
+      <view class="member-avatar">{{ item.avatar }}</view>
+      <view class="member-copy">
+        <view>
+          {{ item.name }}
+          <text class="role">{{ item.role === 'owner' ? '主理人 / 厨师' : '成员' }}</text>
+        </view>
+        <view class="muted">{{ item.role === 'owner' ? '负责确认菜单' : '家庭成员' }}</view>
+      </view>
+    </view>
+  </view>
+  <view class="settings card">
+    <view class="setting"><text>通知提醒</text><text class="muted">每天 10:30</text></view>
+    <view class="setting"><text>关于家庭菜谱</text><text class="muted">›</text></view>
+  </view>
+</view>
+
+
