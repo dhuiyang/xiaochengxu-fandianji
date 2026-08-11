@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/onboarding/index",
     "pages/index/index",
+    "pages/onboarding/index",
     "pages/meal/index",
     "pages/recipes/index",
     "pages/dish-form/index",

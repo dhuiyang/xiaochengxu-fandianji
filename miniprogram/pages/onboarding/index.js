@@ -1,9 +1,12 @@
 const api = require('../../utils/api');
 Page({
-  data: { mode: 'create', memberName: '', familyName: '', inviteCode: '' },
+  data: { step: 'choice', mode: 'create', memberName: '', familyName: '', inviteCode: '' },
+  onLoad(options) {
+    this.allowExisting = options.allowExisting === '1';
+  },
   async onShow() {
     // onboarding 是小程序的入口页。已加入家庭的用户不应在刷新后再次看到创建页。
-    if (this.redirecting) return;
+    if (this.redirecting || this.allowExisting) return;
     try {
       const { family } = await api.bootstrap();
       if (family) {
@@ -14,8 +17,11 @@ Page({
       // 云函数暂不可用时留在 onboarding，仍可向用户展示创建/加入入口。
     }
   },
-  switchMode(e) {
-    this.setData({ mode: e.currentTarget.dataset.mode });
+  chooseMode(e) {
+    this.setData({ mode: e.currentTarget.dataset.mode, step: 'form' });
+  },
+  backToChoice() {
+    this.setData({ step: 'choice' });
   },
   inputName(e) {
     this.setData({ memberName: e.detail.value });

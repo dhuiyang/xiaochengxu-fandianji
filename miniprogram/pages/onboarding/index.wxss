@@ -16,22 +16,62 @@
   color: #9e8c81;
   font-size: 26rpx;
 }
-.tabs {
+.choice-list {
   display: flex;
-  margin-bottom: 20rpx;
-  border-bottom: 1rpx solid #f2e8e1;
+  flex-direction: column;
+  gap: 20rpx;
 }
-.tab {
+.choice-card {
+  display: flex;
+  align-items: center;
+  padding: 30rpx 28rpx;
+  background: #fff;
+  border-radius: 28rpx;
+  box-shadow: 0 10rpx 36rpx rgba(119, 82, 54, 0.07);
+}
+.choice-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 84rpx;
+  height: 84rpx;
+  margin-right: 22rpx;
+  border-radius: 26rpx;
+  background: #fff0e5;
+  font-size: 44rpx;
+}
+.join-choice .choice-icon {
+  background: #e7f1e2;
+}
+.choice-copy {
   flex: 1;
-  padding: 18rpx 0;
-  color: #9c8a80;
-  text-align: center;
-  font-size: 28rpx;
 }
-.tab.active {
-  color: #d9692c;
-  font-weight: 600;
-  border-bottom: 4rpx solid #e87837;
+.choice-title {
+  font-size: 32rpx;
+  font-weight: 700;
+}
+.choice-desc {
+  margin-top: 10rpx;
+  color: #9c8e83;
+  font-size: 24rpx;
+}
+.choice-arrow {
+  color: #c18f70;
+  font-size: 44rpx;
+  font-weight: 300;
+}
+.form-heading {
+  margin: 0 0 22rpx;
+}
+.back-choice {
+  display: inline-block;
+  margin-bottom: 18rpx;
+  color: #b07858;
+  font-size: 25rpx;
+}
+.form-title {
+  font-size: 38rpx;
+  font-weight: 700;
 }
 .field {
   padding: 20rpx 0;

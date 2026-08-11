@@ -14,14 +14,32 @@ const ensureCollections = async () => {
   }
 };
 const context = () => cloud.getWXContext().OPENID;
+async function setActiveFamily(openId, familyId, name) {
+  const user = await first(db.collection('users').where({ openId }));
+  const data = {
+    openId,
+    familyId,
+    activeFamilyId: familyId,
+    name: name || (user && user.name) || '家人',
+    updatedAt: db.serverDate(),
+  };
+  if (user) await db.collection('users').doc(user._id).update({ data });
+  else await db.collection('users').add({ data: Object.assign({}, data, { createdAt: db.serverDate() }) });
+}
 async function userContext() {
   const openId = context();
   const user = await first(db.collection('users').where({ openId }));
-  if (!user || !user.familyId) return { openId, user: user || null, member: null, family: null };
-  const member = await first(
-    db.collection('familyMembers').where({ familyId: user.familyId, openId })
-  );
-  const family = await db.collection('families').doc(user.familyId).get();
+  let familyId = user && (user.activeFamilyId || user.familyId);
+  let member = familyId
+    ? await first(db.collection('familyMembers').where({ familyId, openId }))
+    : null;
+  if (!member) {
+    member = await first(db.collection('familyMembers').where({ openId }));
+    familyId = member && member.familyId;
+    if (familyId) await setActiveFamily(openId, familyId, member.name);
+  }
+  if (!member || !familyId) return { openId, user: user || null, member: null, family: null };
+  const family = await db.collection('families').doc(familyId).get();
   return { openId, user, member, family: family.data };
 }
 function requireFamily(ctx) {
@@ -36,7 +54,6 @@ async function bootstrap() {
 async function createFamily({ name, memberName }) {
   await ensureCollections();
   const ctx = await userContext();
-  if (ctx.member) throw new Error('你已经加入家庭');
   const inviteCode = Math.random().toString(36).slice(2, 8).toUpperCase();
   const family = await db.collection('families').add({
     data: {
@@ -46,30 +63,22 @@ async function createFamily({ name, memberName }) {
       createdAt: db.serverDate(),
     },
   });
-  await db.collection('users').where({ openId: ctx.openId }).remove();
-  await db.collection('users').add({
-    data: {
-      openId: ctx.openId,
-      familyId: family._id,
-      name: (memberName || '我').slice(0, 12),
-      createdAt: db.serverDate(),
-    },
-  });
+  const memberNameValue = (memberName || '我').slice(0, 12);
   await db.collection('familyMembers').add({
     data: {
       familyId: family._id,
       openId: ctx.openId,
-      name: (memberName || '我').slice(0, 12),
+      name: memberNameValue,
       role: 'owner',
       createdAt: db.serverDate(),
     },
   });
+  await setActiveFamily(ctx.openId, family._id, memberNameValue);
   return bootstrap();
 }
 async function joinFamily({ inviteCode, memberName }) {
   await ensureCollections();
   const ctx = await userContext();
-  if (ctx.member) throw new Error('你已经加入家庭');
   const family = await first(
     db.collection('families').where({
       inviteCode: String(inviteCode || '')
@@ -78,24 +87,48 @@ async function joinFamily({ inviteCode, memberName }) {
     })
   );
   if (!family) throw new Error('邀请码无效');
-  await db.collection('users').where({ openId: ctx.openId }).remove();
-  await db.collection('users').add({
-    data: {
-      openId: ctx.openId,
-      familyId: family._id,
-      name: (memberName || '家人').slice(0, 12),
-      createdAt: db.serverDate(),
-    },
-  });
+  const existed = await first(
+    db.collection('familyMembers').where({ familyId: family._id, openId: ctx.openId })
+  );
+  if (existed) {
+    await setActiveFamily(ctx.openId, family._id, existed.name);
+    return bootstrap();
+  }
+  const memberNameValue = (memberName || '家人').slice(0, 12);
   await db.collection('familyMembers').add({
     data: {
       familyId: family._id,
       openId: ctx.openId,
-      name: (memberName || '家人').slice(0, 12),
+      name: memberNameValue,
       role: 'member',
       createdAt: db.serverDate(),
     },
   });
+  await setActiveFamily(ctx.openId, family._id, memberNameValue);
+  return bootstrap();
+}
+async function listMyFamilies() {
+  const openId = context();
+  const memberships = (await db.collection('familyMembers').where({ openId }).limit(20).get()).data;
+  const families = await Promise.all(
+    memberships.map(async (member) => {
+      const family = await db.collection('families').doc(member.familyId).get();
+      return family.data
+        ? { familyId: member.familyId, name: family.data.name, role: member.role, memberName: member.name }
+        : null;
+    })
+  );
+  const ctx = await userContext();
+  return families.filter(Boolean).map((item) =>
+    Object.assign({}, item, { active: !!ctx.family && item.familyId === ctx.family._id })
+  );
+}
+async function switchFamily({ familyId }) {
+  const openId = context();
+  if (!familyId) throw new Error('请选择家庭');
+  const member = await first(db.collection('familyMembers').where({ familyId, openId }));
+  if (!member) throw new Error('你未加入该家庭');
+  await setActiveFamily(openId, familyId, member.name);
   return bootstrap();
 }
 async function listDishes() {
@@ -249,6 +282,8 @@ exports.main = async (event) => {
       bootstrap,
       createFamily,
       joinFamily,
+      listMyFamilies,
+      switchFamily,
       listDishes,
       getDish,
       saveDish,

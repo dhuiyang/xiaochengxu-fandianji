@@ -71,6 +71,93 @@
 .order-card {
   background: linear-gradient(135deg, #fff 0%, #fff5ea 100%);
 }
+.skeleton-card {
+  margin-top: 20rpx;
+}
+.skeleton-order {
+  margin-top: 0;
+}
+.skeleton-top,
+.skeleton-request {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.skeleton-line,
+.skeleton-icon,
+.skeleton-button,
+.skeleton-avatar {
+  background: #f8e9dd;
+  animation: skeleton-pulse 1.2s ease-in-out infinite alternate;
+}
+.skeleton-line {
+  border-radius: 10rpx;
+}
+.skeleton-label {
+  width: 104rpx;
+  height: 20rpx;
+  margin-bottom: 16rpx;
+}
+.skeleton-title {
+  width: 224rpx;
+  height: 34rpx;
+  margin-bottom: 14rpx;
+}
+.skeleton-copy {
+  width: 172rpx;
+  height: 22rpx;
+}
+.skeleton-icon {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 28rpx;
+}
+.skeleton-icon.warm {
+  background: #fae6d5;
+}
+.skeleton-button {
+  width: 360rpx;
+  height: 76rpx;
+  margin: 30rpx auto 0;
+  border-radius: 48rpx;
+}
+.skeleton-button.secondary {
+  width: 320rpx;
+}
+.skeleton-requests {
+  margin-top: 38rpx;
+}
+.skeleton-section-title {
+  width: 190rpx;
+  height: 34rpx;
+}
+.skeleton-request {
+  justify-content: flex-start;
+  margin-top: 32rpx;
+}
+.skeleton-avatar {
+  width: 58rpx;
+  height: 58rpx;
+  border-radius: 50%;
+}
+.skeleton-request-title {
+  width: 220rpx;
+  height: 26rpx;
+  margin: 0 0 12rpx 18rpx;
+}
+.skeleton-request-copy {
+  width: 160rpx;
+  height: 20rpx;
+  margin-left: 18rpx;
+}
+@keyframes skeleton-pulse {
+  from {
+    opacity: 0.55;
+  }
+  to {
+    opacity: 1;
+  }
+}
 .confirm-card {
   margin-top: 20rpx;
 }

@@ -12,53 +12,90 @@
     <view class="switch-time">{{ mealCountdown }}</view>
   </view>
 
-  <view class="card order-card">
-    <view class="card-top">
-      <view>
-        <view class="card-label">我的点菜</view>
-        <view class="order-title">{{ myOrderText }}</view>
-        <view wx:if="{{ myNote }}" class="order-note">备注：{{ myNote }}</view>
-        <view wx:else="" class="muted">选几道你想吃的菜吧</view>
+  <block wx:if="{{ isLoading }}">
+    <view class="card skeleton-card skeleton-order">
+      <view class="skeleton-top">
+        <view>
+          <view class="skeleton-line skeleton-label"></view>
+          <view class="skeleton-line skeleton-title"></view>
+          <view class="skeleton-line skeleton-copy"></view>
+        </view>
+        <view class="skeleton-icon"></view>
       </view>
-      <view class="emoji-circle">🥢</view>
+      <view class="skeleton-button"></view>
     </view>
-    <button class="primary-btn" bindtap="goOrder">
-      {{ myOrderText === '还没点菜' ? '我要点菜' : '修改我的点菜' }}
-    </button>
-  </view>
-
-  <view wx:if="{{ isChef }}" class="card confirm-card">
-    <view class="card-top">
-      <view>
-        <view class="card-label">今日午餐</view>
-        <view class="order-title">{{ confirmed ? '菜单已确认' : '等待确认菜单' }}</view>
-        <view class="muted">
-          {{ confirmed ? confirmedText : familyRequestCount + ' 位家人已点菜' }}
+    <view class="card skeleton-card">
+      <view class="skeleton-top">
+        <view>
+          <view class="skeleton-line skeleton-label"></view>
+          <view class="skeleton-line skeleton-title"></view>
+          <view class="skeleton-line skeleton-copy"></view>
+        </view>
+        <view class="skeleton-icon warm"></view>
+      </view>
+      <view class="skeleton-button secondary"></view>
+    </view>
+    <view class="card skeleton-card skeleton-requests">
+      <view class="skeleton-line skeleton-section-title"></view>
+      <view class="skeleton-request">
+        <view class="skeleton-avatar"></view>
+        <view>
+          <view class="skeleton-line skeleton-request-title"></view>
+          <view class="skeleton-line skeleton-request-copy"></view>
         </view>
       </view>
-      <view class="emoji-circle warm">🍲</view>
     </view>
-    <button class="secondary-btn" bindtap="goConfirm">
-      {{ confirmed ? '查看今日菜单' : '确认今日菜单' }}
-    </button>
-  </view>
+  </block>
 
-  <view class="card requests-section">
-    <view class="requests-title">家人想吃什么</view>
-    <view wx:if="{{ requests.length }}" class="requests">
-      <view wx:for="{{ requests }}" class="request" wx:key="name">
-        <view class="mini-avatar">{{ item.avatar }}</view>
-        <view class="request-copy">
-          <view>
-            <text class="request-name">{{ item.name }}</text>
-            <text>· {{ item.dishes }}</text>
+  <block wx:else>
+    <view class="card order-card">
+      <view class="card-top">
+        <view>
+          <view class="card-label">我的点菜</view>
+          <view class="order-title">{{ myOrderText }}</view>
+          <view wx:if="{{ myNote }}" class="order-note">备注：{{ myNote }}</view>
+          <view wx:else="" class="muted">选几道你想吃的菜吧</view>
+        </view>
+        <view class="emoji-circle">🥢</view>
+      </view>
+      <button class="primary-btn" bindtap="goOrder">
+        {{ myOrderText === '还没点菜' ? '我要点菜' : '修改我的点菜' }}
+      </button>
+    </view>
+
+    <view wx:if="{{ isChef }}" class="card confirm-card">
+      <view class="card-top">
+        <view>
+          <view class="card-label">今日午餐</view>
+          <view class="order-title">{{ confirmed ? '菜单已确认' : '等待确认菜单' }}</view>
+          <view class="muted">
+            {{ confirmed ? confirmedText : familyRequestCount + ' 位家人已点菜' }}
           </view>
-          <view wx:if="{{ item.note }}" class="request-note">“{{ item.note }}”</view>
+        </view>
+        <view class="emoji-circle warm">🍲</view>
+      </view>
+      <button class="secondary-btn" bindtap="goConfirm">
+        {{ confirmed ? '查看今日菜单' : '确认今日菜单' }}
+      </button>
+    </view>
+
+    <view class="card requests-section">
+      <view class="requests-title">家人想吃什么</view>
+      <view wx:if="{{ requests.length }}" class="requests">
+        <view wx:for="{{ requests }}" class="request" wx:key="name">
+          <view class="mini-avatar">{{ item.avatar }}</view>
+          <view class="request-copy">
+            <view>
+              <text class="request-name">{{ item.name }}</text>
+              <text>· {{ item.dishes }}</text>
+            </view>
+            <view wx:if="{{ item.note }}" class="request-note">“{{ item.note }}”</view>
+          </view>
         </view>
       </view>
+      <view wx:else class="empty-requests">暂无选择的菜品</view>
     </view>
-    <view wx:else class="empty-requests">暂无选择的菜品</view>
-  </view>
+  </block>
   <view class="quick-row">
     <view class="quick-item" bindtap="goRecipes"><text>📖</text><view>看看菜谱</view></view>
     <view class="quick-item" bindtap="goRecords"><text>🗓</text><view>饮食记录</view></view>

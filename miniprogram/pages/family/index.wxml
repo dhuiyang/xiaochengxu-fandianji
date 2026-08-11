@@ -1,31 +1,74 @@
 <view class="page">
-  <view class="family-head">
-    <view class="house">🏠</view>
-    <view>
-      <view class="heading">{{ family.name }}</view>
-      <view class="muted">和家人一起，好好吃饭</view>
-    </view>
-  </view>
-  <view class="invite card">
-    <view>
-      <view class="small-title">家庭邀请码</view>
-      <view class="invite-code">{{ family.inviteCode }}</view>
-      <view class="muted">分享邀请码，邀请家人加入</view>
-    </view>
-    <button class="copy-btn" bindtap="copyCode">复制</button>
-  </view>
-  <view class="section-title">家庭成员</view>
-  <view class="members card">
-    <view wx:for="{{ members }}" class="member" wx:key="_id">
-      <view class="member-avatar">{{ item.avatar }}</view>
-      <view class="member-copy">
-        <view>
-          {{ item.name }}
-          <text class="role">{{ item.role === 'owner' ? '主理人 / 厨师' : '成员' }}</text>
-        </view>
-        <view class="muted">{{ item.role === 'owner' ? '负责确认菜单' : '家庭成员' }}</view>
+  <block wx:if="{{ isLoading }}">
+    <view class="family-head skeleton-family-head">
+      <view class="family-skeleton-house"></view>
+      <view>
+        <view class="family-skeleton-line family-skeleton-name"></view>
+        <view class="family-skeleton-line family-skeleton-subtitle"></view>
       </view>
     </view>
-  </view>
-</view>
+    <view class="skeleton-switch-family">
+      <view>
+        <view class="family-skeleton-line family-skeleton-switch-title"></view>
+        <view class="family-skeleton-line family-skeleton-switch-copy"></view>
+      </view>
+      <view class="family-skeleton-line family-skeleton-switch-arrow"></view>
+    </view>
+    <view class="invite card skeleton-invite">
+      <view>
+        <view class="family-skeleton-line family-skeleton-label"></view>
+        <view class="family-skeleton-line family-skeleton-code"></view>
+        <view class="family-skeleton-line family-skeleton-copy"></view>
+      </view>
+      <view class="family-skeleton-button"></view>
+    </view>
+    <view class="family-skeleton-line family-skeleton-section"></view>
+    <view class="members card skeleton-members">
+      <view class="skeleton-member">
+        <view class="family-skeleton-avatar"></view>
+        <view>
+          <view class="family-skeleton-line family-skeleton-member-name"></view>
+          <view class="family-skeleton-line family-skeleton-member-copy"></view>
+        </view>
+      </view>
+    </view>
+  </block>
 
+  <block wx:else>
+    <view class="family-head">
+      <view class="house">🏠</view>
+      <view>
+        <view class="heading">{{ family.name }}</view>
+        <view class="muted">和家人一起，好好吃饭</view>
+      </view>
+    </view>
+    <view class="switch-family" bindtap="showFamilySwitcher">
+      <view>
+        <view class="switch-family-title">切换家庭</view>
+        <view class="switch-family-desc">已加入 {{ families.length }} 个家庭</view>
+      </view>
+      <view class="switch-family-arrow">›</view>
+    </view>
+    <view class="invite card">
+      <view>
+        <view class="small-title">家庭邀请码</view>
+        <view class="invite-code">{{ family.inviteCode }}</view>
+        <view class="muted">分享邀请码，邀请家人加入</view>
+      </view>
+      <button class="copy-btn" bindtap="copyCode">复制</button>
+    </view>
+    <view class="section-title">家庭成员</view>
+    <view class="members card">
+      <view wx:for="{{ members }}" class="member" wx:key="_id">
+        <view class="member-avatar">{{ item.avatar }}</view>
+        <view class="member-copy">
+          <view>
+            {{ item.name }}
+            <text class="role">{{ item.role === 'owner' ? '主理人 / 厨师' : '成员' }}</text>
+          </view>
+          <view class="muted">{{ item.role === 'owner' ? '负责确认菜单' : '家庭成员' }}</view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

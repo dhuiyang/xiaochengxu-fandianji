@@ -12,10 +12,12 @@ Page({
     mealCountdown: '',
     dateLabel: '',
     userAvatar: '我',
+    isLoading: true,
   },
   async onShow() {
     this.updateMealTiming();
     this.startMealTimer();
+    this.setData({ isLoading: true });
     try {
       const init = await api.bootstrap();
       if (!init.family) {
@@ -39,8 +41,10 @@ Page({
         confirmed: !!record,
         confirmedText: record ? record.dishes.join('、') : '',
         familyRequestCount: state.requests.length,
+        isLoading: false,
       });
     } catch (e) {
+      this.setData({ isLoading: false });
       wx.showToast({ title: e.message, icon: 'none' });
     }
   },

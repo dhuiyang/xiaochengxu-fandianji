@@ -19,6 +19,30 @@
   font-weight: 700;
   margin-bottom: 10rpx;
 }
+.switch-family {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: -8rpx 0 24rpx;
+  padding: 20rpx 24rpx;
+  color: #7f5e4b;
+  background: #fff3e8;
+  border-radius: 20rpx;
+}
+.switch-family-title {
+  font-size: 27rpx;
+  font-weight: 600;
+}
+.switch-family-desc {
+  margin-top: 6rpx;
+  color: #aa9385;
+  font-size: 22rpx;
+}
+.switch-family-arrow {
+  color: #cf916d;
+  font-size: 40rpx;
+  font-weight: 300;
+}
 .invite {
   display: flex;
   justify-content: space-between;
@@ -37,11 +61,13 @@
   letter-spacing: 5rpx;
 }
 .copy-btn {
+  box-sizing: border-box;
   padding: 14rpx 24rpx;
   color: #d4672b;
   background: #fff;
-  border: 1rpx solid #f0c6aa;
+  border: 0;
   border-radius: 32rpx;
+  box-shadow: inset 0 0 0 2rpx #efbd9d;
   font-size: 26rpx;
 }
 .members {
@@ -97,4 +123,109 @@
   margin: 40rpx auto 0;
   color: #ad9990;
   font-size: 25rpx;
+}
+.family-skeleton-line,
+.family-skeleton-house,
+.family-skeleton-button,
+.family-skeleton-avatar {
+  background: #f8e9dd;
+  animation: skeleton-pulse 1.2s ease-in-out infinite alternate;
+}
+.family-skeleton-line {
+  border-radius: 10rpx;
+}
+.family-skeleton-house {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 32rpx;
+}
+.family-skeleton-name {
+  width: 210rpx;
+  height: 38rpx;
+  margin-bottom: 16rpx;
+}
+.family-skeleton-subtitle {
+  width: 260rpx;
+  height: 24rpx;
+}
+.skeleton-switch-family {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: -8rpx 0 24rpx;
+  padding: 20rpx 24rpx;
+  background: #fff3e8;
+  border-radius: 20rpx;
+}
+.family-skeleton-switch-title {
+  width: 110rpx;
+  height: 24rpx;
+  margin-bottom: 10rpx;
+}
+.family-skeleton-switch-copy {
+  width: 150rpx;
+  height: 18rpx;
+}
+.family-skeleton-switch-arrow {
+  width: 18rpx;
+  height: 30rpx;
+}
+.skeleton-invite {
+  min-height: 172rpx;
+}
+.family-skeleton-label {
+  width: 110rpx;
+  height: 20rpx;
+  margin-bottom: 16rpx;
+}
+.family-skeleton-code {
+  width: 190rpx;
+  height: 38rpx;
+  margin-bottom: 16rpx;
+}
+.family-skeleton-copy {
+  width: 246rpx;
+  height: 24rpx;
+}
+.family-skeleton-button {
+  width: 180rpx;
+  height: 64rpx;
+  border-radius: 32rpx;
+}
+.family-skeleton-section {
+  width: 160rpx;
+  height: 34rpx;
+  margin: 42rpx 0 24rpx;
+}
+.skeleton-members {
+  padding-top: 6rpx;
+  padding-bottom: 6rpx;
+}
+.skeleton-member {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+}
+.family-skeleton-avatar {
+  width: 66rpx;
+  height: 66rpx;
+  border-radius: 50%;
+}
+.family-skeleton-member-name {
+  width: 210rpx;
+  height: 26rpx;
+  margin: 0 0 12rpx 18rpx;
+}
+.family-skeleton-member-copy {
+  width: 150rpx;
+  height: 20rpx;
+  margin-left: 18rpx;
+}
+@keyframes skeleton-pulse {
+  from {
+    opacity: 0.55;
+  }
+  to {
+    opacity: 1;
+  }
 }

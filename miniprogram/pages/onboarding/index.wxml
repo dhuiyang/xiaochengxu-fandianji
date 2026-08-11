@@ -4,41 +4,56 @@
     <view class="brand-title">家庭菜谱</view>
     <view class="brand-sub">和家人一起，好好吃饭</view>
   </view>
-  <view class="card">
-    <view class="tabs">
-      <view
-        class="tab {{ mode === 'create' ? 'active' : '' }}"
-        data-mode="create"
-        bindtap="switchMode"
-      >
-        创建家庭
-      </view>
-      <view class="tab {{ mode === 'join' ? 'active' : '' }}" data-mode="join" bindtap="switchMode">
-        加入家庭
-      </view>
-    </view>
-    <view class="field">
-      <view>你的称呼</view>
-      <input placeholder="例如：妈妈" value="{{ memberName }}" bindinput="inputName" />
-    </view>
-    <view wx:if="{{ mode === 'create' }}" class="field">
-      <view>家庭名称</view>
-      <input placeholder="例如：杨氏厨房" value="{{ familyName }}" bindinput="inputFamily" />
-    </view>
-    <view wx:else="" class="field">
-      <view>家庭邀请码</view>
-      <input
-        placeholder="请输入 6 位邀请码"
-        maxlength="6"
-        value="{{ inviteCode }}"
-        bindinput="inputCode"
-      />
-    </view>
-    <button class="primary-btn" bindtap="submit">
-      {{ mode === 'create' ? '创建我的家庭' : '加入这个家庭' }}
-    </button>
-  </view>
-  <view class="footnote">创建者将自动成为家庭主理人，可确认每日菜单</view>
-</view>
 
+  <view wx:if="{{ step === 'choice' }}" class="choice-list">
+    <view class="choice-card create-choice" data-mode="create" bindtap="chooseMode">
+      <view class="choice-icon">🏠</view>
+      <view class="choice-copy">
+        <view class="choice-title">创建一个家庭</view>
+        <view class="choice-desc">成为主理人，邀请家人一起点菜</view>
+      </view>
+      <view class="choice-arrow">›</view>
+    </view>
+    <view class="choice-card join-choice" data-mode="join" bindtap="chooseMode">
+      <view class="choice-icon">👨‍👩‍👧‍👦</view>
+      <view class="choice-copy">
+        <view class="choice-title">加入已有家庭</view>
+        <view class="choice-desc">输入家人分享的邀请码即可加入</view>
+      </view>
+      <view class="choice-arrow">›</view>
+    </view>
+  </view>
+
+  <view wx:else>
+    <view class="form-heading">
+      <view class="back-choice" bindtap="backToChoice">‹ 重新选择</view>
+      <view class="form-title">{{ mode === 'create' ? '创建你的家庭' : '加入家人的家庭' }}</view>
+    </view>
+    <view class="card">
+      <view class="field">
+        <view>你的称呼</view>
+        <input placeholder="例如：妈妈" value="{{ memberName }}" bindinput="inputName" />
+      </view>
+      <view wx:if="{{ mode === 'create' }}" class="field">
+        <view>家庭名称</view>
+        <input placeholder="例如：杨氏厨房" value="{{ familyName }}" bindinput="inputFamily" />
+      </view>
+      <view wx:else class="field">
+        <view>家庭邀请码</view>
+        <input
+          placeholder="请输入 6 位邀请码"
+          maxlength="6"
+          value="{{ inviteCode }}"
+          bindinput="inputCode"
+        />
+      </view>
+      <button class="primary-btn" bindtap="submit">
+        {{ mode === 'create' ? '创建我的家庭' : '加入这个家庭' }}
+      </button>
+    </view>
+  </view>
+  <view class="footnote">
+    {{ step === 'choice' ? '已有邀请码？选择“加入已有家庭”即可' : '创建者将自动成为家庭主理人，可确认每日菜单' }}
+  </view>
+</view>
 
