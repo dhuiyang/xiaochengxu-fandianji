@@ -24,7 +24,7 @@
     </view>
   </view>
 
-  <view wx:else>
+  <view wx:else="">
     <view class="form-heading">
       <view class="back-choice" bindtap="backToChoice">‹ 重新选择</view>
       <view class="form-title">{{ mode === 'create' ? '创建你的家庭' : '加入家人的家庭' }}</view>
@@ -38,7 +38,7 @@
         <view>家庭名称</view>
         <input placeholder="例如：杨氏厨房" value="{{ familyName }}" bindinput="inputFamily" />
       </view>
-      <view wx:else class="field">
+      <view wx:else="" class="field">
         <view>家庭邀请码</view>
         <input
           placeholder="请输入 6 位邀请码"
@@ -53,7 +53,12 @@
     </view>
   </view>
   <view class="footnote">
-    {{ step === 'choice' ? '已有邀请码？选择“加入已有家庭”即可' : '创建者将自动成为家庭主理人，可确认每日菜单' }}
+    {{
+      step === 'choice'
+        ? '已有邀请码？选择“加入已有家庭”即可'
+        : '创建者将自动成为家庭主理人，可确认每日菜单'
+     }}
   </view>
 </view>
+
 

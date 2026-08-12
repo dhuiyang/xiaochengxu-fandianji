@@ -11,6 +11,8 @@ module.exports = [
         Page: 'readonly',
         getApp: 'readonly',
         console: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
         setTimeout: 'readonly',
         wx: 'readonly',
       },

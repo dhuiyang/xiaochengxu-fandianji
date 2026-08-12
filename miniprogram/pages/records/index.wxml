@@ -2,10 +2,10 @@
   <view class="heading">饮食记录</view>
   <view class="muted intro">记录每一顿认真吃过的饭</view>
   <view wx:if="{{ isLoading }}" class="loading-state">
-    <view class="loading-spinner"></view>
+    <view class="loading-spinner" />
     <text>记录加载中</text>
   </view>
-  <view wx:elif="{{ records.length }}" class="record-list">
+  <view class="record-list" wx:elif="{{ records.length }}">
     <view wx:for="{{ records }}" class="record card" wx:key="time">
       <view class="record-date">
         <view>
@@ -20,10 +20,11 @@
       </view>
     </view>
   </view>
-  <view wx:else class="empty-box">
+  <view wx:else="" class="empty-box">
     <view>🥣</view>
     <view>还没有饮食记录</view>
     <text>确认一餐菜单后，会自动沉淀在这里</text>
   </view>
 </view>
+
 

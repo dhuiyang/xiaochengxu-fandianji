@@ -16,38 +16,38 @@
     <view class="card skeleton-card skeleton-order">
       <view class="skeleton-top">
         <view>
-          <view class="skeleton-line skeleton-label"></view>
-          <view class="skeleton-line skeleton-title"></view>
-          <view class="skeleton-line skeleton-copy"></view>
+          <view class="skeleton-line skeleton-label" />
+          <view class="skeleton-line skeleton-title" />
+          <view class="skeleton-line skeleton-copy" />
         </view>
-        <view class="skeleton-icon"></view>
+        <view class="skeleton-icon" />
       </view>
-      <view class="skeleton-button"></view>
+      <view class="skeleton-button" />
     </view>
     <view class="card skeleton-card">
       <view class="skeleton-top">
         <view>
-          <view class="skeleton-line skeleton-label"></view>
-          <view class="skeleton-line skeleton-title"></view>
-          <view class="skeleton-line skeleton-copy"></view>
+          <view class="skeleton-line skeleton-label" />
+          <view class="skeleton-line skeleton-title" />
+          <view class="skeleton-line skeleton-copy" />
         </view>
-        <view class="skeleton-icon warm"></view>
+        <view class="skeleton-icon warm" />
       </view>
-      <view class="skeleton-button secondary"></view>
+      <view class="skeleton-button secondary" />
     </view>
     <view class="card skeleton-card skeleton-requests">
-      <view class="skeleton-line skeleton-section-title"></view>
+      <view class="skeleton-line skeleton-section-title" />
       <view class="skeleton-request">
-        <view class="skeleton-avatar"></view>
+        <view class="skeleton-avatar" />
         <view>
-          <view class="skeleton-line skeleton-request-title"></view>
-          <view class="skeleton-line skeleton-request-copy"></view>
+          <view class="skeleton-line skeleton-request-title" />
+          <view class="skeleton-line skeleton-request-copy" />
         </view>
       </view>
     </view>
   </block>
 
-  <block wx:else>
+  <block wx:else="">
     <view class="card order-card">
       <view class="card-top">
         <view>
@@ -93,7 +93,7 @@
           </view>
         </view>
       </view>
-      <view wx:else class="empty-requests">暂无选择的菜品</view>
+      <view wx:else="" class="empty-requests">暂无选择的菜品</view>
     </view>
   </block>
   <view class="quick-row">
@@ -101,3 +101,5 @@
     <view class="quick-item" bindtap="goRecords"><text>🗓</text><view>饮食记录</view></view>
   </view>
 </view>
+
+

@@ -10,7 +10,7 @@ const ensureCollections = async () => {
   for (const name of collections) {
     try {
       await db.createCollection(name);
-    } catch (e) {}
+    } catch {}
   }
 };
 const context = () => cloud.getWXContext().OPENID;
@@ -24,7 +24,10 @@ async function setActiveFamily(openId, familyId, name) {
     updatedAt: db.serverDate(),
   };
   if (user) await db.collection('users').doc(user._id).update({ data });
-  else await db.collection('users').add({ data: Object.assign({}, data, { createdAt: db.serverDate() }) });
+  else
+    await db
+      .collection('users')
+      .add({ data: Object.assign({}, data, { createdAt: db.serverDate() }) });
 }
 async function userContext() {
   const openId = context();
@@ -114,14 +117,21 @@ async function listMyFamilies() {
     memberships.map(async (member) => {
       const family = await db.collection('families').doc(member.familyId).get();
       return family.data
-        ? { familyId: member.familyId, name: family.data.name, role: member.role, memberName: member.name }
+        ? {
+            familyId: member.familyId,
+            name: family.data.name,
+            role: member.role,
+            memberName: member.name,
+          }
         : null;
     })
   );
   const ctx = await userContext();
-  return families.filter(Boolean).map((item) =>
-    Object.assign({}, item, { active: !!ctx.family && item.familyId === ctx.family._id })
-  );
+  return families
+    .filter(Boolean)
+    .map((item) =>
+      Object.assign({}, item, { active: !!ctx.family && item.familyId === ctx.family._id })
+    );
 }
 async function switchFamily({ familyId }) {
   const openId = context();
@@ -170,15 +180,18 @@ async function updateDish({ id, name, category, description, emoji }) {
   if (!name || !String(name).trim()) throw new Error('请填写菜名');
   const dish = await db.collection('dishes').doc(id).get();
   if (!dish.data || dish.data.familyId !== ctx.family._id) throw new Error('菜谱不存在');
-  await db.collection('dishes').doc(id).update({
-    data: {
-      name: String(name).trim().slice(0, 30),
-      category: category || '荤菜',
-      description: (description || '').slice(0, 40),
-      emoji: emoji || '🍲',
-      updatedAt: db.serverDate(),
-    },
-  });
+  await db
+    .collection('dishes')
+    .doc(id)
+    .update({
+      data: {
+        name: String(name).trim().slice(0, 30),
+        category: category || '荤菜',
+        description: (description || '').slice(0, 40),
+        emoji: emoji || '🍲',
+        updatedAt: db.serverDate(),
+      },
+    });
   return { success: true };
 }
 async function overview() {

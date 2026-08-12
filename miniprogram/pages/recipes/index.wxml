@@ -19,10 +19,10 @@
     </view>
   </view>
   <view wx:if="{{ isLoading }}" class="loading-state">
-    <view class="loading-spinner"></view>
+    <view class="loading-spinner" />
     <text>菜谱加载中</text>
   </view>
-  <view wx:elif="{{ visibleDishes.length }}" class="grid">
+  <view class="grid" wx:elif="{{ visibleDishes.length }}">
     <view
       wx:for="{{ visibleDishes }}"
       class="dish-card"
@@ -36,5 +36,7 @@
       <view class="pill">{{ item.category }}</view>
     </view>
   </view>
-  <view wx:else class="empty">没有找到相关菜品</view>
+  <view wx:else="" class="empty">没有找到相关菜品</view>
 </view>
+
+

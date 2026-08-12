@@ -13,7 +13,7 @@ Page({
         this.redirecting = true;
         wx.switchTab({ url: '/pages/index/index' });
       }
-    } catch (e) {
+    } catch {
       // 云函数暂不可用时留在 onboarding，仍可向用户展示创建/加入入口。
     }
   },

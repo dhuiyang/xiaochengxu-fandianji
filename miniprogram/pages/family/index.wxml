@@ -1,40 +1,40 @@
 <view class="page">
   <block wx:if="{{ isLoading }}">
     <view class="family-head skeleton-family-head">
-      <view class="family-skeleton-house"></view>
+      <view class="family-skeleton-house" />
       <view>
-        <view class="family-skeleton-line family-skeleton-name"></view>
-        <view class="family-skeleton-line family-skeleton-subtitle"></view>
+        <view class="family-skeleton-line family-skeleton-name" />
+        <view class="family-skeleton-line family-skeleton-subtitle" />
       </view>
     </view>
     <view class="skeleton-switch-family">
       <view>
-        <view class="family-skeleton-line family-skeleton-switch-title"></view>
-        <view class="family-skeleton-line family-skeleton-switch-copy"></view>
+        <view class="family-skeleton-line family-skeleton-switch-title" />
+        <view class="family-skeleton-line family-skeleton-switch-copy" />
       </view>
-      <view class="family-skeleton-line family-skeleton-switch-arrow"></view>
+      <view class="family-skeleton-line family-skeleton-switch-arrow" />
     </view>
     <view class="invite card skeleton-invite">
       <view>
-        <view class="family-skeleton-line family-skeleton-label"></view>
-        <view class="family-skeleton-line family-skeleton-code"></view>
-        <view class="family-skeleton-line family-skeleton-copy"></view>
+        <view class="family-skeleton-line family-skeleton-label" />
+        <view class="family-skeleton-line family-skeleton-code" />
+        <view class="family-skeleton-line family-skeleton-copy" />
       </view>
-      <view class="family-skeleton-button"></view>
+      <view class="family-skeleton-button" />
     </view>
-    <view class="family-skeleton-line family-skeleton-section"></view>
+    <view class="family-skeleton-line family-skeleton-section" />
     <view class="members card skeleton-members">
       <view class="skeleton-member">
-        <view class="family-skeleton-avatar"></view>
+        <view class="family-skeleton-avatar" />
         <view>
-          <view class="family-skeleton-line family-skeleton-member-name"></view>
-          <view class="family-skeleton-line family-skeleton-member-copy"></view>
+          <view class="family-skeleton-line family-skeleton-member-name" />
+          <view class="family-skeleton-line family-skeleton-member-copy" />
         </view>
       </view>
     </view>
   </block>
 
-  <block wx:else>
+  <block wx:else="">
     <view class="family-head">
       <view class="house">🏠</view>
       <view>
@@ -72,3 +72,5 @@
     </view>
   </block>
 </view>
+
+

@@ -14,7 +14,6 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "@babel/parser": "^8.0.4",
     "eslint": "^10.8.1",
     "prettier": "^2.8.8",
     "prettier-plugin-wxml": "^3.0.0"

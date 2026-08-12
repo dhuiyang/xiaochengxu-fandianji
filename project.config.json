@@ -47,18 +47,6 @@
   "appid": "wx646951359d3ec9b1",
   "projectname": "fandianji",
   "libVersion": "latest",
-  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
-  "condition": {
-    "miniprogram": {
-      "list": [
-        {
-          "name": "db guide",
-          "pathName": "pages/databaseGuide/databaseGuide",
-          "query": ""
-        }
-      ]
-    }
-  },
   "compileType": "miniprogram",
   "srcMiniprogramRoot": "miniprogram/",
   "packOptions": {

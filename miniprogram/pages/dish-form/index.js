@@ -56,7 +56,10 @@ Page({
       };
       if (this.data.isEditing) await api.updateDish(this.data.dishId, payload);
       else await api.saveDish(payload);
-      wx.showToast({ title: this.data.isEditing ? '菜谱已更新' : '已加入家庭菜谱', icon: 'success' });
+      wx.showToast({
+        title: this.data.isEditing ? '菜谱已更新' : '已加入家庭菜谱',
+        icon: 'success',
+      });
       setTimeout(() => wx.navigateBack(), 500);
     } catch (e) {
       wx.showToast({ title: e.message, icon: 'none' });
