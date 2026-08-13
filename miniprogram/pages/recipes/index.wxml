@@ -18,7 +18,7 @@
       {{ item }}
     </view>
   </view>
-  <view wx:if="{{ isLoading }}" class="loading-state">
+  <view wx:if="{{ isLoading && !hasLoaded }}" class="loading-state">
     <view class="loading-spinner" />
     <text>菜谱加载中</text>
   </view>

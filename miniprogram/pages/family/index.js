@@ -5,6 +5,7 @@ Page({
     members: [],
     families: [],
     isLoading: true,
+    hasLoaded: false,
     isOwner: false,
     showRoleManager: false,
     selectedMember: null,
@@ -19,7 +20,9 @@ Page({
     isSavingFamily: false,
   },
   async onShow() {
-    this.setData({ isLoading: true });
+    const requestId = (this.familyRequestId || 0) + 1;
+    this.familyRequestId = requestId;
+    if (!this.data.hasLoaded) this.setData({ isLoading: true });
     try {
       const now = new Date();
       const date = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(
@@ -29,6 +32,7 @@ Page({
         api.overview({ date, meal: 'lunch' }),
         api.listMyFamilies(),
       ]);
+      if (requestId !== this.familyRequestId) return;
       this.setData({
         family: data.family,
         families,
@@ -48,8 +52,10 @@ Page({
           })
         ),
         isLoading: false,
+        hasLoaded: true,
       });
     } catch (e) {
+      if (requestId !== this.familyRequestId) return;
       this.setData({ isLoading: false });
       wx.showToast({ title: e.message, icon: 'none' });
     }

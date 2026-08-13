@@ -25,15 +25,11 @@
 .record-icon {
   font-size: 44rpx;
 }
-.menu-label {
-  margin: 22rpx 0 14rpx;
-  color: #a07963;
-  font-size: 24rpx;
-}
 .menu-items {
   display: flex;
   flex-wrap: wrap;
   gap: 12rpx;
+  padding-top: 22rpx;
 }
 .menu-item {
   padding: 10rpx 16rpx;

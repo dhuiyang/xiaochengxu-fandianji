@@ -26,6 +26,7 @@ Page({
     isUploadingProfileAvatar: false,
     isSavingProfile: false,
     isLoading: true,
+    hasLoaded: false,
     showRecommend: false,
     recommendCategory: '全部',
     recommendCategories: ['全部', '荤菜', '素菜', '汤羹'],
@@ -99,9 +100,12 @@ Page({
     return { date: this.data.mealDate, meal: this.data.activeMeal };
   },
   async loadOverview(context, profile) {
-    this.setData({ isLoading: true });
+    const requestId = (this.overviewRequestId || 0) + 1;
+    this.overviewRequestId = requestId;
+    if (!this.data.hasLoaded) this.setData({ isLoading: true });
     try {
       const state = await api.overview(context || this.getMealContext());
+      if (requestId !== this.overviewRequestId) return;
       const mine = state.requests.find((item) => item.openId === state.member.openId);
       const record = state.record;
       this.setData({
@@ -120,8 +124,10 @@ Page({
         confirmedText: record ? record.dishes.join('、') : '',
         familyRequestCount: state.requests.length,
         isLoading: false,
+        hasLoaded: true,
       });
     } catch (e) {
+      if (requestId !== this.overviewRequestId) return;
       this.setData({ isLoading: false });
       wx.showToast({ title: e.message, icon: 'none' });
     }

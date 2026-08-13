@@ -7,19 +7,25 @@ Page({
     activeCategory: '全部',
     keyword: '',
     isLoading: true,
+    hasLoaded: false,
     canManage: false,
   },
   async onShow() {
-    this.setData({ isLoading: true });
+    const requestId = (this.recipesRequestId || 0) + 1;
+    this.recipesRequestId = requestId;
+    if (!this.data.hasLoaded) this.setData({ isLoading: true });
     try {
       const [dishes, context] = await Promise.all([api.listDishes(), api.bootstrap()]);
+      if (requestId !== this.recipesRequestId) return;
       this.setData({
         dishes,
         visibleDishes: this.getVisibleDishes(dishes),
         canManage: ['owner', 'chef'].includes(context.member.role),
         isLoading: false,
+        hasLoaded: true,
       });
     } catch (e) {
+      if (requestId !== this.recipesRequestId) return;
       this.setData({ isLoading: false });
       wx.showToast({ title: e.message, icon: 'none' });
     }
