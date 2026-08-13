@@ -10,7 +10,9 @@
       <view class="record-date">
         <view>
           <view class="date-main">{{ item.date }}</view>
-          <view class="muted">{{ item.meal }} · {{ item.time }} 由{{ item.confirmer }}确认</view>
+          <view class="muted">
+            {{ item.mealLabel }} · {{ item.time }} 由{{ item.confirmer }}确认
+          </view>
         </view>
         <view class="record-icon">🍽</view>
       </view>

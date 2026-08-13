@@ -7,7 +7,10 @@ Page({
       const records = await api.listRecords();
       this.setData({
         records: records.map((item) =>
-          Object.assign({}, item, { time: item.confirmedAt ? '已确认' : '刚刚' })
+          Object.assign({}, item, {
+            time: item.confirmedAt ? '已确认' : '刚刚',
+            mealLabel: item.meal === 'dinner' ? '晚餐' : '午餐',
+          })
         ),
         isLoading: false,
       });

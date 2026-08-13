@@ -28,6 +28,66 @@
   color: #9b887e;
   font-weight: 400;
 }
+.optional {
+  color: #ad9b91;
+  font-size: 24rpx;
+  font-weight: 400;
+}
+.required {
+  margin-left: 6rpx;
+  color: #dc6e32;
+}
+.dish-image-picker {
+  position: relative;
+  height: 240rpx;
+  margin-top: 18rpx;
+  overflow: hidden;
+  border: 2rpx dashed #e7cdbb;
+  border-radius: 18rpx;
+  background: #fffaf6;
+}
+.dish-image-preview {
+  width: 100%;
+  height: 100%;
+}
+.dish-image-placeholder {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #a58f80;
+  font-size: 26rpx;
+  font-weight: 400;
+}
+.camera-icon {
+  margin-bottom: 10rpx;
+  font-size: 50rpx;
+}
+.replace-image {
+  position: absolute;
+  right: 16rpx;
+  bottom: 16rpx;
+  padding: 8rpx 16rpx;
+  color: #fff;
+  border-radius: 24rpx;
+  background: rgba(68, 54, 46, 0.7);
+  font-size: 22rpx;
+  font-weight: 400;
+}
+.remove-image {
+  display: inline-block;
+  margin-top: 16rpx;
+  color: #d96829;
+  font-size: 25rpx;
+  font-weight: 400;
+}
+.image-tip {
+  margin-top: 10rpx;
+  color: #ad9b91;
+  font-size: 22rpx;
+  font-weight: 400;
+}
 .emoji-list {
   display: flex;
   flex-wrap: wrap;

@@ -1,7 +1,9 @@
 <view class="page">
   <view class="hero">
-    <view class="kicker">8 月 11 日 · 午餐</view>
-    <view class="hero-title">{{ isConfirm ? '确认今日菜单' : '选几道想吃的菜' }}</view>
+    <view class="kicker">{{ mealDateLabel }} · {{ mealName }}</view>
+    <view class="hero-title">
+      {{ isConfirm ? '确认' + mealName + '菜单' : '选几道' + mealName + '想吃的菜' }}
+    </view>
     <view class="hero-sub">
       {{ isConfirm ? '确认后将同步到所有家人的饮食记录' : '主厨确认前，都可以继续增减或修改备注' }}
     </view>
@@ -25,8 +27,21 @@
       data-id="{{ item._id }}"
       bindtap="toggleDish"
     >
-      <view class="dish-emoji">{{ item.emoji }}</view>
-      <view class="dish-copy"><view>{{ item.name }}</view><view>{{ item.description }}</view></view>
+      <image
+        wx:if="{{ item.imageFileId }}"
+        class="dish-emoji dish-image"
+        src="{{ item.imageFileId }}"
+        mode="aspectFill"
+        data-id="{{ item._id }}"
+        catchtap="viewDish"
+      />
+      <view wx:else="" class="dish-emoji" data-id="{{ item._id }}" catchtap="viewDish">
+        {{ item.emoji }}
+      </view>
+      <view class="dish-copy" data-id="{{ item._id }}" catchtap="viewDish">
+        <view>{{ item.name }}</view>
+        <view>{{ item.description }}</view>
+      </view>
       <view class="check">{{ item.selected ? '✓' : '' }}</view>
     </view>
   </view>
@@ -42,7 +57,7 @@
   </view>
   <view class="bottom-action">
     <button class="primary-btn" bindtap="submit">
-      {{ isConfirm ? '确认今日菜单' : '提交点菜' }}
+      {{ isConfirm ? '确认' + mealName + '菜单' : '提交' + mealName + '点菜' }}
     </button>
   </view>
 </view>

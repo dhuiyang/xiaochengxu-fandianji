@@ -50,41 +50,84 @@
 .grid {
   display: flex;
   flex-wrap: wrap;
+  align-items: stretch;
   justify-content: space-between;
 }
 .dish-card {
+  display: flex;
+  min-height: 350rpx;
+  flex-direction: column;
   width: calc(50% - 10rpx);
   min-width: 0;
   margin-bottom: 20rpx;
-  padding: 18rpx;
+  overflow: hidden;
   box-sizing: border-box;
   background: #fff;
-  border-radius: 24rpx;
+  border-radius: 22rpx;
+  box-shadow: 0 8rpx 24rpx rgba(104, 70, 48, 0.05);
 }
 .food {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 172rpx;
-  border-radius: 18rpx;
-  background: #faeee4;
+  background: linear-gradient(135deg, #fff2e9, #fae7d9);
   font-size: 80rpx;
 }
+.food-image {
+  display: block;
+  width: 100%;
+  height: 172rpx;
+}
+.dish-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 18rpx 18rpx 16rpx;
+}
 .dish-name {
-  margin: 18rpx 0 8rpx;
+  overflow: hidden;
+  color: #372b25;
   font-size: 29rpx;
   font-weight: 700;
+  line-height: 42rpx;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .dish-desc {
-  min-height: 34rpx;
+  display: -webkit-box;
+  min-height: 60rpx;
+  margin-top: 8rpx;
+  overflow: hidden;
   color: #9d8d83;
   font-size: 22rpx;
-  line-height: 34rpx;
+  line-height: 30rpx;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   overflow-wrap: anywhere;
   word-break: break-all;
 }
-.dish-card .pill {
-  margin-top: 14rpx;
+.dish-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48rpx;
+  margin-top: auto;
+  padding-top: 16rpx;
+}
+.dish-actions {
+  display: flex;
+  gap: 14rpx;
+  align-items: center;
+  font-size: 22rpx;
+}
+.dish-edit {
+  color: #b97b56;
+}
+.dish-delete {
+  padding-left: 14rpx;
+  color: #d96829;
+  border-left: 1rpx solid #f0ddd1;
 }
 .empty {
   padding: 100rpx 0;

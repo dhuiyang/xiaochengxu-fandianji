@@ -11,13 +11,40 @@
       </picker>
     </view>
     <view class="field">
-      <view>菜品简介</view>
+      <view>菜品简介<text class="required">*</text></view>
       <textarea
         placeholder="简单描述一下这道菜"
-        maxlength="40"
+        maxlength="80"
         value="{{ description }}"
         bindinput="inputDescription"
       />
+    </view>
+    <view class="field">
+      <view>菜品做法<text class="optional">（可选）</text></view>
+      <textarea
+        placeholder="记录食材、步骤或烹饪小技巧"
+        maxlength="300"
+        value="{{ method }}"
+        bindinput="inputMethod"
+      />
+    </view>
+    <view class="field">
+      <view>菜品图片<text class="optional">（可选）</text></view>
+      <view class="dish-image-picker" bindtap="chooseImage">
+        <image
+          wx:if="{{ imagePreview }}"
+          class="dish-image-preview"
+          src="{{ imagePreview }}"
+          mode="aspectFill"
+        />
+        <view wx:else="" class="dish-image-placeholder">
+          <view class="camera-icon">📷</view>
+          <text>{{ isUploadingImage ? '图片上传中…' : '拍照或从相册选择' }}</text>
+        </view>
+        <view wx:if="{{ imagePreview }}" class="replace-image">更换图片</view>
+      </view>
+      <view wx:if="{{ imagePreview }}" class="remove-image" catchtap="removeImage">移除图片</view>
+      <view class="image-tip">建议上传清晰的菜品实拍图</view>
     </view>
     <view class="field">
       <view>选择封面</view>

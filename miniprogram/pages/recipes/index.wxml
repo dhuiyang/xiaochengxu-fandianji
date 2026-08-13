@@ -4,7 +4,7 @@
       <view class="heading">家庭菜谱</view>
       <view class="muted">{{ dishes.length }} 道家常菜</view>
     </view>
-    <view class="add" bindtap="goAdd">＋</view>
+    <view wx:if="{{ canManage }}" class="add" bindtap="goAdd">＋</view>
   </view>
   <input class="search" placeholder="搜索菜名" bindinput="search" />
   <view class="chips">
@@ -23,17 +23,25 @@
     <text>菜谱加载中</text>
   </view>
   <view class="grid" wx:elif="{{ visibleDishes.length }}">
-    <view
-      wx:for="{{ visibleDishes }}"
-      class="dish-card"
-      wx:key="_id"
-      data-id="{{ item._id }}"
-      bindtap="goEdit"
-    >
-      <view class="food">{{ item.emoji }}</view>
-      <view class="dish-name">{{ item.name }}</view>
-      <view class="dish-desc">{{ item.description }}</view>
-      <view class="pill">{{ item.category }}</view>
+    <view wx:for="{{ visibleDishes }}" class="dish-card" wx:key="_id">
+      <image
+        wx:if="{{ item.imageFileId }}"
+        class="food-image"
+        src="{{ item.imageFileId }}"
+        mode="aspectFill"
+      />
+      <view wx:else="" class="food">{{ item.emoji }}</view>
+      <view class="dish-content">
+        <view class="dish-name">{{ item.name }}</view>
+        <view class="dish-desc">{{ item.description }}</view>
+        <view class="dish-footer">
+          <view class="pill">{{ item.category }}</view>
+          <view wx:if="{{ canManage }}" class="dish-actions">
+            <text class="dish-edit" data-id="{{ item._id }}" catchtap="goEdit">编辑</text>
+            <text class="dish-delete" data-id="{{ item._id }}" catchtap="deleteDish">删除</text>
+          </view>
+        </view>
+      </view>
     </view>
   </view>
   <view wx:else="" class="empty">没有找到相关菜品</view>

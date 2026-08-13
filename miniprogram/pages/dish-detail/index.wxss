@@ -1,0 +1,90 @@
+.detail-card {
+  overflow: hidden;
+  background: #fff;
+  border-radius: 28rpx;
+  box-shadow: 0 10rpx 36rpx rgba(119, 82, 54, 0.07);
+}
+.dish-cover {
+  display: block;
+  width: 100%;
+  height: 400rpx;
+}
+.emoji-cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #fff2e9, #fae7d9);
+  font-size: 150rpx;
+}
+.detail-content {
+  padding: 30rpx 28rpx 36rpx;
+}
+.detail-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18rpx;
+}
+.detail-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 42rpx;
+  font-weight: 700;
+  line-height: 56rpx;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.detail-section {
+  margin-top: 32rpx;
+}
+.detail-label {
+  margin-bottom: 12rpx;
+  color: #9b7158;
+  font-size: 24rpx;
+  font-weight: 600;
+}
+.detail-text {
+  color: #5a4a40;
+  font-size: 28rpx;
+  line-height: 46rpx;
+  white-space: pre-wrap;
+}
+.method-section {
+  padding-top: 28rpx;
+  border-top: 1rpx solid #f1e7df;
+}
+.method-text {
+  color: #766257;
+}
+.detail-skeleton {
+  padding-bottom: 32rpx;
+}
+.skeleton-cover,
+.skeleton-line {
+  background: #f8e9dd;
+  animation: pulse 1.2s ease-in-out infinite alternate;
+}
+.skeleton-cover {
+  height: 400rpx;
+}
+.skeleton-line {
+  height: 28rpx;
+  margin: 30rpx 28rpx 0;
+  border-radius: 10rpx;
+}
+.skeleton-title {
+  width: 280rpx;
+  height: 42rpx;
+}
+.skeleton-copy {
+  width: 460rpx;
+}
+@keyframes pulse {
+  from {
+    opacity: 0.55;
+  }
+  to {
+    opacity: 1;
+  }
+}

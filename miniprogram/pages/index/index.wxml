@@ -1,18 +1,17 @@
 <view class="page">
-  <view class="greeting">
-    <view>
-      <view class="eyebrow">{{ dateLabel }}</view>
-      <view class="headline">今天吃点什么？</view>
-    </view>
-    <view class="avatar">{{ userAvatar }}</view>
-  </view>
-  <view class="meal-switch">
-    <view class="switch-item {{ activeMeal === 'lunch' ? 'active' : '' }}">午餐</view>
-    <view class="switch-item {{ activeMeal === 'dinner' ? 'active' : '' }}">晚餐</view>
-    <view class="switch-time">{{ mealCountdown }}</view>
-  </view>
-
   <block wx:if="{{ isLoading }}">
+    <view class="greeting skeleton-greeting">
+      <view>
+        <view class="skeleton-line skeleton-eyebrow" />
+        <view class="skeleton-line skeleton-headline" />
+      </view>
+      <view class="skeleton-profile-avatar" />
+    </view>
+    <view class="skeleton-meal-switch">
+      <view class="skeleton-switch-item" />
+      <view class="skeleton-switch-item active" />
+      <view class="skeleton-switch-time" />
+    </view>
     <view class="card skeleton-card skeleton-order">
       <view class="skeleton-top">
         <view>
@@ -23,6 +22,7 @@
         <view class="skeleton-icon" />
       </view>
       <view class="skeleton-button" />
+      <view class="skeleton-recommend-entry" />
     </view>
     <view class="card skeleton-card">
       <view class="skeleton-top">
@@ -45,13 +45,49 @@
         </view>
       </view>
     </view>
+    <view class="skeleton-quick-row">
+      <view class="skeleton-quick-item" />
+      <view class="skeleton-quick-item" />
+    </view>
   </block>
 
   <block wx:else="">
+    <view class="greeting">
+      <view>
+        <view class="eyebrow">{{ dateLabel }}</view>
+        <view class="headline">今天吃点什么？</view>
+      </view>
+      <view class="avatar" bindtap="openProfileEditor">
+        <image
+          wx:if="{{ profileAvatarPreview }}"
+          class="avatar-image"
+          src="{{ profileAvatarPreview }}"
+          mode="aspectFill"
+        />
+        <text wx:else="">{{ userAvatar }}</text>
+      </view>
+    </view>
+    <view class="meal-switch">
+      <view
+        class="switch-item {{ activeMeal === 'lunch' ? 'active' : '' }}"
+        data-meal="lunch"
+        bindtap="changeMeal"
+      >
+        午餐
+      </view>
+      <view
+        class="switch-item {{ activeMeal === 'dinner' ? 'active' : '' }}"
+        data-meal="dinner"
+        bindtap="changeMeal"
+      >
+        晚餐
+      </view>
+      <view class="switch-time">{{ mealCountdown }}</view>
+    </view>
     <view class="card order-card">
       <view class="card-top">
         <view>
-          <view class="card-label">我的点菜</view>
+          <view class="card-label">我的{{ isTomorrow ? '明日' : '今日' }}{{ mealName }}点菜</view>
           <view class="order-title">{{ myOrderText }}</view>
           <view wx:if="{{ myNote }}" class="order-note">备注：{{ myNote }}</view>
           <view wx:else="" class="muted">选几道你想吃的菜吧</view>
@@ -61,12 +97,13 @@
       <button class="primary-btn" bindtap="goOrder">
         {{ myOrderText === '还没点菜' ? '我要点菜' : '修改我的点菜' }}
       </button>
+      <button class="recommend-entry" bindtap="openRecommend">🎲 帮我随机选</button>
     </view>
 
     <view wx:if="{{ isChef }}" class="card confirm-card">
       <view class="card-top">
         <view>
-          <view class="card-label">今日午餐</view>
+          <view class="card-label">{{ isTomorrow ? '明日' : '今日' }}{{ mealName }}</view>
           <view class="order-title">{{ confirmed ? '菜单已确认' : '等待确认菜单' }}</view>
           <view class="muted">
             {{ confirmed ? confirmedText : familyRequestCount + ' 位家人已点菜' }}
@@ -75,7 +112,7 @@
         <view class="emoji-circle warm">🍲</view>
       </view>
       <button class="secondary-btn" bindtap="goConfirm">
-        {{ confirmed ? '查看今日菜单' : '确认今日菜单' }}
+        {{ confirmed ? '查看菜单' : '确认' + mealName + '菜单' }}
       </button>
     </view>
 
@@ -96,9 +133,87 @@
       <view wx:else="" class="empty-requests">暂无选择的菜品</view>
     </view>
   </block>
-  <view class="quick-row">
+  <view wx:if="{{ !isLoading }}" class="quick-row">
     <view class="quick-item" bindtap="goRecipes"><text>📖</text><view>看看菜谱</view></view>
     <view class="quick-item" bindtap="goRecords"><text>🗓</text><view>饮食记录</view></view>
+  </view>
+  <view wx:if="{{ showRecommend }}" class="recommend-mask" bindtap="closeRecommend">
+    <view class="recommend-sheet" catchtap="noop">
+      <view class="sheet-handle" />
+      <view class="recommend-heading">
+        <view>
+          <view class="recommend-title">不知道吃什么？</view>
+          <view class="recommend-subtitle">从家庭菜谱里为你挑一道</view>
+        </view>
+        <view class="sheet-close" bindtap="closeRecommend">×</view>
+      </view>
+      <view class="recommend-filters">
+        <view
+          wx:for="{{ recommendCategories }}"
+          class="recommend-filter {{ recommendCategory === item ? 'active' : '' }}"
+          wx:key="*this"
+          data-category="{{ item }}"
+          bindtap="chooseRecommendCategory"
+        >
+          {{ item }}
+        </view>
+      </view>
+      <view wx:if="{{ isRecommending }}" class="recommend-loading">正在翻翻家庭菜谱…</view>
+      <view class="recommend-result" wx:elif="{{ recommendation }}">
+        <image
+          wx:if="{{ recommendation.dish.imageFileId }}"
+          class="recommend-image"
+          src="{{ recommendation.dish.imageFileId }}"
+          mode="aspectFill"
+        />
+        <view wx:else="" class="recommend-emoji">{{ recommendation.dish.emoji }}</view>
+        <view class="recommend-name">{{ recommendation.dish.name }}</view>
+        <view class="recommend-meta">
+          {{ recommendation.dish.category }} · {{ recommendation.dish.description || '家庭菜谱' }}
+        </view>
+        <view class="recommend-reason">✨ {{ recommendation.reason }}</view>
+      </view>
+      <view class="recommend-actions">
+        <button
+          class="recommend-refresh"
+          loading="{{ isRecommending }}"
+          bindtap="loadRecommendation"
+        >
+          ↻ 换一道
+        </button>
+        <button class="recommend-add" bindtap="addRecommendation">加入我的点菜</button>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{ showProfileEditor }}" class="profile-mask" bindtap="closeProfileEditor">
+    <view class="profile-sheet" catchtap="noop">
+      <view class="sheet-handle" />
+      <view class="profile-title">编辑个人资料</view>
+      <view class="profile-avatar-picker" bindtap="chooseProfileAvatar">
+        <image
+          wx:if="{{ editingAvatarPreview }}"
+          class="profile-avatar-image"
+          src="{{ editingAvatarPreview }}"
+          mode="aspectFill"
+        />
+        <view wx:else="" class="profile-avatar-placeholder">{{ editingNameFirst }}</view>
+        <view class="profile-avatar-edit">
+          {{ isUploadingProfileAvatar ? '上传中…' : '更换头像' }}
+        </view>
+      </view>
+      <view class="profile-field">
+        <view class="profile-field-label">昵称</view>
+        <input
+          maxlength="12"
+          value="{{ editingName }}"
+          placeholder="请输入昵称"
+          bindinput="inputProfileName"
+        />
+      </view>
+      <button class="profile-save" loading="{{ isSavingProfile }}" bindtap="saveProfile">
+        保存修改
+      </button>
+    </view>
   </view>
 </view>
 

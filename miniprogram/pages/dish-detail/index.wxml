@@ -1,0 +1,32 @@
+<view class="page">
+  <view wx:if="{{ isLoading }}" class="detail-card detail-skeleton">
+    <view class="skeleton-cover" />
+    <view class="skeleton-line skeleton-title" />
+    <view class="skeleton-line skeleton-copy" />
+  </view>
+  <view class="detail-card" wx:elif="{{ dish }}">
+    <image
+      wx:if="{{ dish.imageFileId }}"
+      class="dish-cover"
+      src="{{ dish.imageFileId }}"
+      mode="aspectFill"
+    />
+    <view wx:else="" class="dish-cover emoji-cover">{{ dish.emoji }}</view>
+    <view class="detail-content">
+      <view class="detail-title-row">
+        <view class="detail-name">{{ dish.name }}</view>
+        <view class="pill">{{ dish.category }}</view>
+      </view>
+      <view class="detail-section">
+        <view class="detail-label">菜品简介</view>
+        <view class="detail-text">{{ dish.description }}</view>
+      </view>
+      <view wx:if="{{ dish.method }}" class="detail-section method-section">
+        <view class="detail-label">菜品做法</view>
+        <view class="detail-text method-text">{{ dish.method }}</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+

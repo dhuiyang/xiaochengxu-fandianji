@@ -2,10 +2,11 @@
   <block wx:if="{{ isLoading }}">
     <view class="family-head skeleton-family-head">
       <view class="family-skeleton-house" />
-      <view>
+      <view class="family-skeleton-copy">
         <view class="family-skeleton-line family-skeleton-name" />
         <view class="family-skeleton-line family-skeleton-subtitle" />
       </view>
+      <view class="family-skeleton-edit" />
     </view>
     <view class="skeleton-switch-family">
       <view>
@@ -31,16 +32,31 @@
           <view class="family-skeleton-line family-skeleton-member-copy" />
         </view>
       </view>
+      <view class="skeleton-member">
+        <view class="family-skeleton-avatar" />
+        <view>
+          <view class="family-skeleton-line family-skeleton-member-name" />
+          <view class="family-skeleton-line family-skeleton-member-copy" />
+        </view>
+        <view class="family-skeleton-member-action" />
+      </view>
     </view>
   </block>
 
   <block wx:else="">
-    <view class="family-head">
-      <view class="house">🏠</view>
-      <view>
+    <view class="family-head {{ isOwner ? 'editable' : '' }}" bindtap="openFamilyEditor">
+      <image
+        wx:if="{{ family.avatarFileId }}"
+        class="house-image"
+        src="{{ family.avatarFileId }}"
+        mode="aspectFill"
+      />
+      <view wx:else="" class="house">🏠</view>
+      <view class="family-copy">
         <view class="heading">{{ family.name }}</view>
-        <view class="muted">和家人一起，好好吃饭</view>
+        <view class="family-description">{{ family.description || '和家人一起，好好吃饭' }}</view>
       </view>
+      <view wx:if="{{ isOwner }}" class="family-edit-hint">编辑</view>
     </view>
     <view class="switch-family" bindtap="showFamilySwitcher">
       <view>
@@ -50,27 +66,113 @@
       <view class="switch-family-arrow">›</view>
     </view>
     <view class="invite card">
-      <view>
+      <view class="invite-copy">
         <view class="small-title">家庭邀请码</view>
         <view class="invite-code">{{ family.inviteCode }}</view>
-        <view class="muted">分享邀请码，邀请家人加入</view>
+        <view class="invite-desc">分享邀请码，邀请家人加入</view>
       </view>
       <button class="copy-btn" bindtap="copyCode">复制</button>
     </view>
     <view class="section-title">家庭成员</view>
     <view class="members card">
       <view wx:for="{{ members }}" class="member" wx:key="_id">
-        <view class="member-avatar">{{ item.avatar }}</view>
+        <image
+          wx:if="{{ item.avatarFileId }}"
+          class="member-avatar member-avatar-image"
+          src="{{ item.avatarFileId }}"
+          mode="aspectFill"
+        />
+        <view wx:else="" class="member-avatar">{{ item.avatar }}</view>
         <view class="member-copy">
-          <view>
-            {{ item.name }}
-            <text class="role">{{ item.role === 'owner' ? '主理人 / 厨师' : '成员' }}</text>
+          <view class="member-name-row">
+            <text class="member-name">{{ item.name }}</text>
+            <text class="role {{ item.role }}">{{ item.roleLabel }}</text>
           </view>
-          <view class="muted">{{ item.role === 'owner' ? '负责确认菜单' : '家庭成员' }}</view>
+          <view class="muted">{{ item.roleDescription }}</view>
+        </view>
+        <view
+          wx:if="{{ isOwner && !item.isSelf && item.role !== 'owner' }}"
+          class="member-manage"
+          data-id="{{ item._id }}"
+          bindtap="openRoleManager"
+        >
+          管理 ›
         </view>
       </view>
     </view>
   </block>
+  <view wx:if="{{ showRoleManager }}" class="role-mask" bindtap="closeRoleManager">
+    <view class="role-sheet" catchtap="noop">
+      <view class="sheet-handle" />
+      <view class="role-sheet-title">管理{{ selectedMember.name }}的角色</view>
+      <view class="role-sheet-subtitle">角色变更后会立即生效</view>
+      <view
+        class="role-option {{ selectedRole === 'member' ? 'selected' : '' }}"
+        data-role="member"
+        bindtap="chooseRole"
+      >
+        <view class="role-option-icon">👨‍👩‍👧</view>
+        <view class="role-option-copy">
+          <view>家庭成员</view>
+          <text>可以点菜、随机推荐、查看菜谱和记录</text>
+        </view>
+        <view class="role-radio">{{ selectedRole === 'member' ? '✓' : '' }}</view>
+      </view>
+      <view
+        class="role-option {{ selectedRole === 'chef' ? 'selected' : '' }}"
+        data-role="chef"
+        bindtap="chooseRole"
+      >
+        <view class="role-option-icon">👨‍🍳</view>
+        <view class="role-option-copy">
+          <view>厨师</view>
+          <text>拥有成员权限，并可确认午餐和晚餐菜单</text>
+        </view>
+        <view class="role-radio">{{ selectedRole === 'chef' ? '✓' : '' }}</view>
+      </view>
+      <button class="role-save" loading="{{ isSavingRole }}" bindtap="saveRole">保存角色</button>
+      <view class="remove-member" bindtap="confirmRemoveMember">移除该成员</view>
+    </view>
+  </view>
+  <view wx:if="{{ showFamilyEditor }}" class="role-mask" bindtap="closeFamilyEditor">
+    <view class="role-sheet" catchtap="noop">
+      <view class="sheet-handle" />
+      <view class="role-sheet-title">编辑家庭信息</view>
+      <view class="family-avatar-picker" bindtap="chooseFamilyAvatar">
+        <image
+          wx:if="{{ editingFamilyAvatarPreview }}"
+          class="family-avatar-image"
+          src="{{ editingFamilyAvatarPreview }}"
+          mode="aspectFill"
+        />
+        <view wx:else="" class="family-avatar-placeholder">🏠</view>
+        <view class="family-avatar-edit">
+          {{ isUploadingFamilyAvatar ? '上传中…' : '更换头像' }}
+        </view>
+      </view>
+      <view class="family-name-field">
+        <view>家庭名称</view>
+        <input
+          maxlength="20"
+          value="{{ editingFamilyName }}"
+          placeholder="请输入家庭名称"
+          bindinput="inputFamilyName"
+        />
+      </view>
+      <view class="family-description-field">
+        <view>家庭简介<text>（可选）</text></view>
+        <textarea
+          maxlength="60"
+          value="{{ editingFamilyDescription }}"
+          placeholder="例如：和家人一起，好好吃饭"
+          bindinput="inputFamilyDescription"
+        />
+      </view>
+      <button class="role-save" loading="{{ isSavingFamily }}" bindtap="saveFamily">
+        保存修改
+      </button>
+    </view>
+  </view>
 </view>
 
 

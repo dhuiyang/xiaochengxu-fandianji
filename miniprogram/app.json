@@ -5,6 +5,7 @@
     "pages/meal/index",
     "pages/recipes/index",
     "pages/dish-form/index",
+    "pages/dish-detail/index",
     "pages/records/index",
     "pages/family/index"
   ],
