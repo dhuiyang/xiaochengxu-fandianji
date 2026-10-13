@@ -17,6 +17,7 @@ Page({
     dateLabel: '',
     userAvatar: '我',
     profileName: '',
+    profileAvatarFileId: '',
     profileAvatarPreview: '',
     showProfileEditor: false,
     editingName: '',
@@ -108,11 +109,13 @@ Page({
       if (requestId !== this.overviewRequestId) return;
       const mine = state.requests.find((item) => item.openId === state.member.openId);
       const record = state.record;
+      const currentProfile = profile || state.profile || {};
       this.setData({
         isChef: ['owner', 'chef'].includes(state.member.role),
-        profileName: (profile || state.profile || {}).name || state.member.name,
-        userAvatar: this.getAvatarText((profile || state.profile || {}).name || state.member.name),
-        profileAvatarPreview: (profile || state.profile || {}).avatarFileId || '',
+        profileName: currentProfile.name || state.member.name,
+        userAvatar: this.getAvatarText(currentProfile.name || state.member.name),
+        profileAvatarFileId: currentProfile.avatarFileId || '',
+        profileAvatarPreview: currentProfile.avatarUrl || '',
         myOrderText: mine ? mine.dishes.join('、') : '还没点菜',
         myNote: mine ? mine.note : '',
         requests: state.requests
@@ -159,7 +162,7 @@ Page({
       showProfileEditor: true,
       editingName: this.data.profileName,
       editingNameFirst: this.data.userAvatar,
-      editingAvatarFileId: this.data.profileAvatarPreview,
+      editingAvatarFileId: this.data.profileAvatarFileId,
       editingAvatarPreview: this.data.profileAvatarPreview,
     });
   },
@@ -193,7 +196,7 @@ Page({
           .slice(2, 10)}${extension}`,
         filePath,
       });
-      this.setData({ editingAvatarFileId: result.fileID, editingAvatarPreview: result.fileID });
+      this.setData({ editingAvatarFileId: result.fileID });
     } catch (e) {
       if (!String(e.errMsg || '').includes('cancel')) {
         this.setData(previousAvatar);
@@ -218,7 +221,8 @@ Page({
       this.setData({
         userAvatar: this.getAvatarText(profile.name),
         profileName: profile.name,
-        profileAvatarPreview: profile.avatarFileId,
+        profileAvatarFileId: profile.avatarFileId,
+        profileAvatarPreview: profile.avatarUrl || '',
         showProfileEditor: false,
       });
       wx.showToast({ title: '个人资料已更新', icon: 'success' });

@@ -161,9 +161,9 @@
       <view wx:if="{{ isRecommending }}" class="recommend-loading">正在翻翻家庭菜谱…</view>
       <view class="recommend-result" wx:elif="{{ recommendation }}">
         <image
-          wx:if="{{ recommendation.dish.imageFileId }}"
+          wx:if="{{ recommendation.dish.imageUrl }}"
           class="recommend-image"
-          src="{{ recommendation.dish.imageFileId }}"
+          src="{{ recommendation.dish.imageUrl }}"
           mode="aspectFill"
         />
         <view wx:else="" class="recommend-emoji">{{ recommendation.dish.emoji }}</view>

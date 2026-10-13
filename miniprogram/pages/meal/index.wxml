@@ -28,9 +28,9 @@
       bindtap="toggleDish"
     >
       <image
-        wx:if="{{ item.imageFileId }}"
+        wx:if="{{ item.imageUrl }}"
         class="dish-emoji dish-image"
-        src="{{ item.imageFileId }}"
+        src="{{ item.imageUrl }}"
         mode="aspectFill"
         data-id="{{ item._id }}"
         catchtap="viewDish"

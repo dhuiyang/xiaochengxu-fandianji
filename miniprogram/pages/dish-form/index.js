@@ -39,7 +39,7 @@ Page({
         category: dish.category || '荤菜',
         emoji: dish.emoji || '🍲',
         imageFileId: dish.imageFileId || '',
-        imagePreview: dish.imageFileId || '',
+        imagePreview: dish.imageUrl || '',
       });
     } catch (e) {
       wx.showToast({ title: e.message, icon: 'none' });
@@ -84,7 +84,7 @@ Page({
           .slice(2, 10)}${extension}`,
         filePath: tempFilePath,
       });
-      this.setData({ imageFileId: result.fileID, imagePreview: result.fileID });
+      this.setData({ imageFileId: result.fileID });
     } catch (e) {
       if (!String(e.errMsg || '').includes('cancel')) {
         this.setData(previousImage);

@@ -25,9 +25,9 @@
   <view class="grid" wx:elif="{{ visibleDishes.length }}">
     <view wx:for="{{ visibleDishes }}" class="dish-card" wx:key="_id">
       <image
-        wx:if="{{ item.imageFileId }}"
+        wx:if="{{ item.imageUrl }}"
         class="food-image"
-        src="{{ item.imageFileId }}"
+        src="{{ item.imageUrl }}"
         mode="aspectFill"
       />
       <view wx:else="" class="food">{{ item.emoji }}</view>

@@ -72,7 +72,7 @@ Page({
       editingFamilyName: this.data.family.name || '',
       editingFamilyDescription: this.data.family.description || '',
       editingFamilyAvatarFileId: this.data.family.avatarFileId || '',
-      editingFamilyAvatarPreview: this.data.family.avatarFileId || '',
+      editingFamilyAvatarPreview: this.data.family.avatarUrl || '',
     });
   },
   closeFamilyEditor() {
@@ -107,10 +107,7 @@ Page({
           .slice(2, 10)}${extension}`,
         filePath,
       });
-      this.setData({
-        editingFamilyAvatarFileId: result.fileID,
-        editingFamilyAvatarPreview: result.fileID,
-      });
+      this.setData({ editingFamilyAvatarFileId: result.fileID });
     } catch (e) {
       if (!String(e.errMsg || '').includes('cancel')) {
         this.setData(previousAvatar);

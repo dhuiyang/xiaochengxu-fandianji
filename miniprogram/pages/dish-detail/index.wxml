@@ -6,9 +6,9 @@
   </view>
   <view class="detail-card" wx:elif="{{ dish }}">
     <image
-      wx:if="{{ dish.imageFileId }}"
+      wx:if="{{ dish.imageUrl }}"
       class="dish-cover"
-      src="{{ dish.imageFileId }}"
+      src="{{ dish.imageUrl }}"
       mode="aspectFill"
     />
     <view wx:else="" class="dish-cover emoji-cover">{{ dish.emoji }}</view>

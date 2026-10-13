@@ -3,7 +3,12 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 const _ = db.command;
 const MAX_DISHES_PER_MEAL = 20;
+const TEMP_FILE_URL_BATCH_SIZE = 50;
 const DISH_CATEGORIES = ['荤菜', '素菜', '汤羹', '米饭'];
+const IMAGE_URL_FIELDS = {
+  imageFileId: 'imageUrl',
+  avatarFileId: 'avatarUrl',
+};
 
 // 所有餐次日期按中国标准时间（Asia/Shanghai）计算，不能用 UTC 日期替代本地业务日。
 const shanghaiDateFormatter = new Intl.DateTimeFormat('en-CA', {
@@ -57,6 +62,41 @@ const normalizeCloudImageFileId = (value, folder) => {
   return fileId.slice(0, 500);
 };
 const normalizeImageFileId = (value) => normalizeCloudImageFileId(value, 'dish-images');
+const visitCloudImageFields = (value, callback) => {
+  if (!value || typeof value !== 'object') return;
+  if (Array.isArray(value)) {
+    value.forEach((item) => visitCloudImageFields(item, callback));
+    return;
+  }
+  Object.entries(IMAGE_URL_FIELDS).forEach(([fileIdField, urlField]) => {
+    const fileId = value[fileIdField];
+    if (typeof fileId === 'string' && fileId.startsWith('cloud://'))
+      callback(value, fileId, urlField);
+  });
+  Object.values(value).forEach((item) => visitCloudImageFields(item, callback));
+};
+const attachCloudImageUrls = async (data) => {
+  const fileIds = new Set();
+  visitCloudImageFields(data, (_target, fileId) => fileIds.add(fileId));
+  if (!fileIds.size) return data;
+
+  const urls = new Map();
+  const list = [...fileIds];
+  for (let index = 0; index < list.length; index += TEMP_FILE_URL_BATCH_SIZE) {
+    try {
+      const result = await cloud.getTempFileURL({
+        fileList: list.slice(index, index + TEMP_FILE_URL_BATCH_SIZE),
+      });
+      (result.fileList || []).forEach((file) => {
+        if (file.tempFileURL) urls.set(file.fileID, file.tempFileURL);
+      });
+    } catch {}
+  }
+  visitCloudImageFields(data, (target, fileId, urlField) => {
+    target[urlField] = urls.get(fileId) || '';
+  });
+  return data;
+};
 const removeCloudImage = async (fileId, folder) => {
   if (!fileId || !String(fileId).startsWith('cloud://') || !String(fileId).includes(`/${folder}/`))
     return;
@@ -534,7 +574,8 @@ exports.main = async (event) => {
       listRecords,
     };
     if (!handlers[event.action]) throw new Error('未知操作');
-    return { ok: true, data: await handlers[event.action](event.data || {}) };
+    const data = await handlers[event.action](event.data || {});
+    return { ok: true, data: await attachCloudImageUrls(data) };
   } catch (error) {
     return { ok: false, message: error.message || '服务暂时不可用' };
   }

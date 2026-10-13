@@ -46,9 +46,9 @@
   <block wx:else="">
     <view class="family-head {{ isOwner ? 'editable' : '' }}" bindtap="openFamilyEditor">
       <image
-        wx:if="{{ family.avatarFileId }}"
+        wx:if="{{ family.avatarUrl }}"
         class="house-image"
-        src="{{ family.avatarFileId }}"
+        src="{{ family.avatarUrl }}"
         mode="aspectFill"
       />
       <view wx:else="" class="house">🏠</view>
@@ -77,9 +77,9 @@
     <view class="members card">
       <view wx:for="{{ members }}" class="member" wx:key="_id">
         <image
-          wx:if="{{ item.avatarFileId }}"
+          wx:if="{{ item.avatarUrl }}"
           class="member-avatar member-avatar-image"
-          src="{{ item.avatarFileId }}"
+          src="{{ item.avatarUrl }}"
           mode="aspectFill"
         />
         <view wx:else="" class="member-avatar">{{ item.avatar }}</view>
