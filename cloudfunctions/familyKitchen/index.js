@@ -1,10 +1,12 @@
 const cloud = require('wx-server-sdk');
+const https = require('https');
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 const _ = db.command;
 const MAX_DISHES_PER_MEAL = 20;
 const TEMP_FILE_URL_BATCH_SIZE = 50;
 const DISH_CATEGORIES = ['荤菜', '素菜', '汤羹', '米饭'];
+const AI_MAX_PROMPT = 300;
 const IMAGE_URL_FIELDS = {
   imageFileId: 'imageUrl',
   avatarFileId: 'avatarUrl',
@@ -62,6 +64,91 @@ const normalizeCloudImageFileId = (value, folder) => {
   return fileId.slice(0, 500);
 };
 const normalizeImageFileId = (value) => normalizeCloudImageFileId(value, 'dish-images');
+function requestJson(url, body, headers = {}) {
+  return new Promise((resolve, reject) => {
+    const target = new URL(url);
+    const request = https.request(
+      {
+        hostname: target.hostname,
+        port: target.port || 443,
+        path: `${target.pathname}${target.search}`,
+        method: 'POST',
+        headers: Object.assign({ 'Content-Type': 'application/json' }, headers),
+        timeout: 60000,
+      },
+      (response) => {
+        let raw = '';
+        response.setEncoding('utf8');
+        response.on('data', (chunk) => {
+          raw += chunk;
+        });
+        response.on('end', () => {
+          if (response.statusCode < 200 || response.statusCode >= 300)
+            return reject(new Error(`AI 服务请求失败（${response.statusCode}）`));
+          try {
+            resolve(JSON.parse(raw));
+          } catch {
+            reject(new Error('AI 服务返回格式无效'));
+          }
+        });
+      }
+    );
+    request.on('timeout', () => request.destroy(new Error('AI 服务响应超时')));
+    request.on('error', reject);
+    request.write(JSON.stringify(body));
+    request.end();
+  });
+}
+async function generateDish({ prompt }) {
+  requireCook(await userContext());
+  const input = normalizeText(prompt, AI_MAX_PROMPT);
+  if (!input) throw new Error('请先输入菜名或菜品描述');
+  const apiKey = String(process.env.AI_API_KEY || '').trim();
+  const apiUrl = String(
+    process.env.AI_API_URL || 'https://api.openai.com/v1/chat/completions'
+  ).trim();
+  const model = String(process.env.AI_MODEL || 'gpt-4o-mini').trim();
+  if (!apiKey) throw new Error('AI 服务尚未配置，请联系管理员');
+  const response = await requestJson(
+    apiUrl,
+    {
+      model,
+      temperature: 0.4,
+      response_format: { type: 'json_object' },
+      messages: [
+        {
+          role: 'system',
+          content:
+            '你是家庭菜谱助手。根据用户输入补全菜谱，必须只返回 JSON，字段为 name、category、description、method、emoji。category 只能是荤菜、素菜、汤羹、米饭之一；description 不超过 50 字；method 不超过 200 字；内容具体、适合家庭烹饪，不要编造用户没有要求的特殊过敏信息。',
+        },
+        { role: 'user', content: input },
+      ],
+    },
+    { Authorization: `Bearer ${apiKey}` }
+  );
+  const content =
+    response.choices &&
+    response.choices[0] &&
+    response.choices[0].message &&
+    response.choices[0].message.content;
+  if (!content) throw new Error('AI 没有返回菜谱内容');
+  let dish;
+  try {
+    dish = typeof content === 'string' ? JSON.parse(content) : content;
+  } catch {
+    throw new Error('AI 返回内容无法解析');
+  }
+  const name = normalizeText(dish.name, 30) || input.slice(0, 30);
+  const description = normalizeText(dish.description, 80);
+  if (!description) throw new Error('AI 未生成菜品简介，请重试');
+  return {
+    name,
+    category: normalizeCategory(dish.category),
+    description,
+    method: normalizeText(dish.method, 300),
+    emoji: String(dish.emoji || '🍲').slice(0, 4),
+  };
+}
 const visitCloudImageFields = (value, callback) => {
   if (!value || typeof value !== 'object') return;
   if (Array.isArray(value)) {
@@ -564,6 +651,7 @@ exports.main = async (event) => {
       updateFamily,
       listDishes,
       getDish,
+      generateDish,
       saveDish,
       updateDish,
       deleteDish,

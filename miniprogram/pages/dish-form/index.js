@@ -13,6 +13,8 @@ Page({
     isUploadingImage: false,
     dishId: '',
     isEditing: false,
+    aiPrompt: '',
+    isGenerating: false,
   },
   async onLoad(options) {
     try {
@@ -55,6 +57,34 @@ Page({
   },
   inputMethod(e) {
     this.setData({ method: e.detail.value });
+  },
+  inputAiPrompt(e) {
+    this.setData({ aiPrompt: e.detail.value });
+  },
+  async generateWithAI() {
+    const prompt = this.data.aiPrompt.trim() || this.data.name.trim();
+    if (!prompt) {
+      wx.showToast({ title: '先写一句菜名或描述', icon: 'none' });
+      return;
+    }
+    try {
+      this.setData({ isGenerating: true });
+      const result = await api.generateDish(prompt);
+      this.setData({
+        name: result.name || this.data.name,
+        description: result.description || this.data.description,
+        method: result.method || this.data.method,
+        category: this.data.categories.includes(result.category)
+          ? result.category
+          : this.data.category,
+        emoji: result.emoji || this.data.emoji,
+      });
+      wx.showToast({ title: '已生成，可继续修改', icon: 'success' });
+    } catch (e) {
+      wx.showToast({ title: e.message || '生成失败，请稍后重试', icon: 'none' });
+    } finally {
+      this.setData({ isGenerating: false });
+    }
   },
   pickCategory(e) {
     this.setData({ category: this.data.categories[e.detail.value] });

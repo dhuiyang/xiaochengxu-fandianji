@@ -26,6 +26,7 @@ module.exports = {
   recommendDish: (category, context) => call('recommendDish', Object.assign({ category }, context)),
   listDishes: () => call('listDishes'),
   getDish: (id) => call('getDish', { id }),
+  generateDish: (prompt) => call('generateDish', { prompt }),
   saveDish: (data) => call('saveDish', data),
   updateDish: (id, data) => call('updateDish', Object.assign({ id }, data)),
   deleteDish: (id) => call('deleteDish', { id }),

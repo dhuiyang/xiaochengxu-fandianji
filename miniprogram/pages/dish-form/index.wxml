@@ -1,5 +1,24 @@
 <view class="page">
   <view class="form card">
+    <view class="ai-helper">
+      <view class="ai-helper-title"><text class="ai-sparkle">✦</text>AI 帮我填写</view>
+      <textarea
+        class="ai-input"
+        placeholder="只写菜名，或描述口味、食材和做法，例如：外婆做的微辣红烧肉"
+        maxlength="300"
+        value="{{ aiPrompt }}"
+        bindinput="inputAiPrompt"
+      />
+      <button
+        class="ai-btn"
+        loading="{{ isGenerating }}"
+        disabled="{{ isGenerating }}"
+        bindtap="generateWithAI"
+      >
+        {{ isGenerating ? '正在生成菜谱…' : '生成菜谱内容' }}
+      </button>
+      <view class="ai-tip">生成后会填入下方内容，你可以继续修改</view>
+    </view>
     <view class="field">
       <view>菜名</view>
       <input placeholder="例如：红烧肉" value="{{ name }}" bindinput="inputName" />

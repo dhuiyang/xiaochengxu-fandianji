@@ -15,6 +15,8 @@ module.exports = [
         clearInterval: 'readonly',
         setTimeout: 'readonly',
         wx: 'readonly',
+        URL: 'readonly',
+        process: 'readonly',
       },
     },
     rules: {

@@ -18,6 +18,12 @@
 4. 在微信开发者工具中右键 `cloudfunctions/familyKitchen`，选择“上传并部署：云端安装依赖”。
 5. 点击编译；首次进入创建或加入一个真实家庭，再开始添加菜品与点菜。
 
+## AI 菜谱补全
+
+添加菜品页面提供“AI 帮我填写”：用户输入菜名或一段自然语言描述，云函数会生成菜名、分类、简介和做法，结果回填后仍可手动修改。AI 请求只从云函数发出，密钥不会进入小程序代码。
+
+部署前请在云函数的环境变量中配置 `AI_API_KEY`。默认请求 OpenAI 兼容的 `https://api.openai.com/v1/chat/completions`，也可以通过 `AI_API_URL` 指向兼容接口，并用 `AI_MODEL` 指定模型（默认 `gpt-4o-mini`）。
+
 ## 代码格式化与检查
 
 项目已配置 Prettier、`prettier-plugin-wxml` 与 ESLint，覆盖 JavaScript、JSON、WXML 与 WXSS。
