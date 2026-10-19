@@ -369,14 +369,23 @@ async function removeFamilyMember({ memberId }) {
 }
 async function listDishes() {
   const ctx = requireFamily(await userContext());
-  return (
-    await db
+  return readFamilyDishes(ctx.family._id);
+}
+async function readFamilyDishes(familyId) {
+  const dishes = [];
+  let page;
+  do {
+    page = await db
       .collection('dishes')
-      .where({ familyId: ctx.family._id })
+      .where({ familyId })
       .orderBy('createdAt', 'desc')
+      .orderBy('_id', 'asc')
+      .skip(dishes.length)
       .limit(100)
-      .get()
-  ).data;
+      .get();
+    dishes.push(...page.data);
+  } while (page.data.length === 100);
+  return dishes;
 }
 async function getDish({ id }) {
   const ctx = requireFamily(await userContext());
@@ -539,7 +548,7 @@ async function recommendDish({ category, date, meal }) {
   const ctx = requireFamily(await userContext());
   ({ date, meal } = resolveMealContext({ date, meal }));
   const [dishesResult, requestsResult, recordsResult] = await Promise.all([
-    db.collection('dishes').where({ familyId: ctx.family._id }).limit(100).get(),
+    readFamilyDishes(ctx.family._id).then((data) => ({ data })),
     db.collection('mealRequests').where({ familyId: ctx.family._id, date, meal }).limit(20).get(),
     db
       .collection('mealRecords')
