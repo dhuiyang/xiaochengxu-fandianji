@@ -1,6 +1,6 @@
 <view class="page">
   <view class="form card">
-    <view class="ai-helper">
+    <view wx:if="{{ false }}" class="ai-helper">
       <view class="ai-helper-title"><text class="ai-sparkle">✦</text>AI 帮我填写</view>
       <textarea
         class="ai-input"
